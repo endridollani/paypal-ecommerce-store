@@ -1,54 +1,61 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import { Col, Form, notification, Row, Spin } from 'antd';
+import { Col, Form, Row, Spin } from 'antd';
 import { useForm } from 'antd/es/form/Form';
-import React, { useState } from 'react';
-import Cookies from 'js-cookie';
-import { login } from '../../api/userLoginService';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import {
   CenterContainer,
   StyledButton,
   StyledInput,
 } from '../../components/styledComponents';
-import { LoginType } from '../../types/Login';
 import Card from '../../components/Card';
+import { isAdmin, isUser } from '../../utils/utilFunctions';
+import { onLogin } from '../../redux/authUser/actions';
+import { IS_LOGGEDIN } from '../../utils/constants';
+
+export interface LoginUserData {
+  email: string;
+  password: string;
+}
 
 export default function LogIn() {
   const [form] = useForm();
   const [loading, isLoading] = useState(false);
-  const [api, contextHolder] = notification.useNotification();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const authUserState = useSelector((state: any) => state.authUser);
 
-  const onFinish = async (values: LoginType) => {
+  const isAdminUser = isAdmin(authUserState);
+  const isNormalUser = isUser(authUserState);
+
+  const onFinish = async (userCredentials: LoginUserData) => {
+    if (loading) return;
     isLoading(true);
-    login(values)
-      .then((response) => {
-        if (response.status === 200) {
-          if (response.data.user.user_type === 'admin') {
-            Cookies.set('admin', 'loginTrue');
-            Cookies.remove('user');
-          } else {
-            Cookies.set('user', 'loginTrue');
-            Cookies.remove('admin');
-          }
-          api.success({
-            message: 'Loged in successfully!',
-            placement: 'topRight',
-          });
-        }
+    toast.dismiss();
+    dispatch(
+      onLogin({
+        ...userCredentials,
       })
-      .catch(() => {
-        api.error({
-          message: 'Loged in failed!',
-          placement: 'topRight',
-        });
-      })
-      .finally(() => {
-        isLoading(false);
-      });
+    );
   };
+
+  useEffect(() => {
+    const isUserLoggedIn = localStorage.getItem(IS_LOGGEDIN);
+    if (authUserState.error) {
+      isLoading(false);
+      toast.error('Invalid credentials. Please try again.');
+    }
+    if (isUserLoggedIn) {
+      isLoading(false);
+      if (isAdminUser || isNormalUser) {
+        navigate('/home');
+      }
+    }
+  }, [authUserState]);
 
   return (
     <CenterContainer>
-      {contextHolder}
       <Card title="Log in" centerTitle>
         <Row justify="space-around" gutter={[0, 20]}>
           <Col span={24}>
@@ -83,6 +90,7 @@ export default function LogIn() {
                   Register
                 </StyledButton>
               </Col>
+              <Col />
               <Col>
                 <StyledButton
                   size="large"

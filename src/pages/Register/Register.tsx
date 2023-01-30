@@ -1,50 +1,22 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import { Col, Form, notification, Row, Spin } from 'antd';
+import { Col, Form, Row, Spin } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   CenterContainer,
   StyledButton,
   StyledInput,
 } from '../../components/styledComponents';
 import Card from '../../components/Card';
-import { RegisterType } from '../../types/Register';
-import { register } from '../../api/userRegisterService';
 
 export default function Register() {
   const [form] = useForm();
   const [loading, isLoading] = useState(false);
-  const [api, contextHolder] = notification.useNotification();
-
-  const navigate = useNavigate();
-
-  const onFinish = async (values: RegisterType) => {
+  const onFinish = async () => {
     isLoading(true);
-    register(values)
-      .then((response) => {
-        if (response.status === 201) {
-          api.success({
-            message: 'Registered successfully!',
-            placement: 'topRight',
-          });
-          navigate('/login');
-        }
-      })
-      .catch(() => {
-        api.error({
-          message: 'Registration failed!',
-          placement: 'topRight',
-        });
-      })
-      .finally(() => {
-        isLoading(false);
-      });
   };
 
   return (
     <CenterContainer>
-      {contextHolder}
       <Card title="Register" centerTitle>
         <Row justify="center" gutter={[0, 20]}>
           <Col span={18}>
