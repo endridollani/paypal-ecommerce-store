@@ -1,14 +1,31 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Button, Col, Image, Layout, Row, Space, Typography } from 'antd';
+import {
+  Avatar,
+  Badge,
+  Button,
+  Col,
+  Image,
+  Layout,
+  Row,
+  Space,
+  Tag,
+  Tooltip,
+  Typography,
+} from 'antd';
 import { Content, Footer, Header } from 'antd/lib/layout/layout';
-import { RadarChartOutlined } from '@ant-design/icons';
+import {
+  RadarChartOutlined,
+  SettingOutlined,
+  ShoppingCartOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { StyledButton } from '../components/styledComponents';
 import { isAdmin, isUser } from '../utils/utilFunctions';
-import { IS_LOGGEDIN } from '../utils/constants';
-import { getAuthUser } from '../redux/authUser/actions';
+import { IS_LOGGEDIN, USER, USER_ID, USER_ROLE } from '../utils/constants';
+import { getAuthUser, onLogout } from '../redux/authUser/actions';
 
 export enum SCREE_SIZE {
   SMALL = 'sm',
@@ -47,53 +64,90 @@ export default function App() {
   }, [authUserState]);
 
   return (
-    <Layout>
-      <Header>
-        <Row justify="space-between">
-          <Col span={5}>
+    <Layout style={{ minHeight: '100vh' }}>
+      <Header
+        style={{
+          height: '80px',
+          display: 'flex',
+        }}
+      >
+        <Row
+          justify="space-between"
+          align="middle"
+          style={{ width: '100%', padding: '0 80px' }}
+        >
+          <Col>
             <Space align="baseline" size="large">
               <RadarChartOutlined
-                style={{ color: 'white', fontSize: '30px' }}
-                title="Paypal Store"
+                style={{ color: 'white', fontSize: '25px' }}
+                title={`${isAdminUser ? 'Paypal Store ADMIN' : 'Paypal Store'}`}
               />
-              <Typography.Title level={3} style={{ color: 'white' }}>
-                PayPal Store
-              </Typography.Title>
+              {isAdminUser ? (
+                <>
+                  <Typography.Title level={4} style={{ color: 'white' }}>
+                    Paypal Store
+                  </Typography.Title>
+                  <Tag color="purple">ADMIN</Tag>
+                </>
+              ) : (
+                'Paypal Store'
+              )}
             </Space>
           </Col>
           <Col>
-            <Row gutter={[30, 0]}>
-              <Col>
-                <Button
-                  type="link"
-                  style={{ color: 'white' }}
-                  ghost
-                  size="large"
-                  href="/register"
+            <Row justify="start" align="middle" gutter={[50, 0]}>
+              {/* <Col style={{ paddingTop: '10px' }}>
+                <Badge
+                  count={0}
+                  showZero
+                  color="white"
+                  style={{ color: 'black' }}
                 >
-                  Register
-                </Button>
-              </Col>
+                  <Avatar
+                    icon={<ShoppingCartOutlined />}
+                    style={{
+                      backgroundColor: 'transparent',
+                      cursor: 'pointer',
+                    }}
+                    size="large"
+                  />
+                </Badge>
+              </Col> */}
               <Col>
-                <StyledButton type="default" ghost size="large" href="/login">
-                  Login
-                </StyledButton>
+                <Tooltip
+                  placement="bottom"
+                  trigger="hover"
+                  title={
+                    <StyledButton
+                      type="link"
+                      onClick={() => {
+                        dispatch(onLogout());
+                        navigate('/guest');
+                        localStorage.removeItem(USER);
+                        localStorage.removeItem(IS_LOGGEDIN);
+                        localStorage.removeItem(USER_ROLE);
+                        localStorage.removeItem(USER_ID);
+                      }}
+                    >
+                      Log Out
+                    </StyledButton>
+                  }
+                  color="white"
+                >
+                  <Avatar
+                    style={{ backgroundColor: '#efdbff', color: 'black' }}
+                    size="large"
+                  >
+                    {`${authUserState?.data?.user_name.charAt(
+                      0
+                    )} ${authUserState?.data?.user_surname.charAt(0)}`}
+                  </Avatar>
+                </Tooltip>
               </Col>
             </Row>
           </Col>
         </Row>
       </Header>
-      <Content style={{ height: '83vh' }}>
-        <Image
-          width="100%"
-          height="100%"
-          preview={false}
-          src="https://wallpapercave.com/wp/wp2747211.jpg"
-        />
-      </Content>
-      <Footer style={{ textAlign: 'center' }}>
-        <Typography.Text strong>PayPal Store ©2023</Typography.Text>
-      </Footer>
     </Layout>
   );
 }
