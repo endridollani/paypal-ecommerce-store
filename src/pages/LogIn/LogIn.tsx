@@ -48,7 +48,7 @@ export default function LogIn() {
     if (isUserLoggedIn) {
       isLoading(false);
       if (isAdminUser || isNormalUser) {
-        navigate('/home');
+        navigate('/');
       }
     }
   }, [authUserState]);

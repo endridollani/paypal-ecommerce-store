@@ -6,8 +6,6 @@ export default function EnthusiasticIcon() {
       id="e1d5934e-742d-4ca8-bddd-5635b1db6509"
       data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
-      width="865.76"
-      height="682.89"
       viewBox="0 0 865.76 682.89"
     >
       <g

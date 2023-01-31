@@ -26,6 +26,7 @@ import { StyledButton } from '../components/styledComponents';
 import { isAdmin, isUser } from '../utils/utilFunctions';
 import { IS_LOGGEDIN, USER, USER_ID, USER_ROLE } from '../utils/constants';
 import { getAuthUser, onLogout } from '../redux/authUser/actions';
+import Admin from '../pages/Admin';
 
 export enum SCREE_SIZE {
   SMALL = 'sm',
@@ -65,89 +66,92 @@ export default function App() {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Header
-        style={{
-          height: '80px',
-          display: 'flex',
-        }}
-      >
-        <Row
-          justify="space-between"
-          align="middle"
-          style={{ width: '100%', padding: '0 80px' }}
-        >
-          <Col>
-            <Space align="baseline" size="large">
-              <RadarChartOutlined
-                style={{ color: 'white', fontSize: '25px' }}
-                title={`${isAdminUser ? 'Paypal Store ADMIN' : 'Paypal Store'}`}
-              />
-              {isAdminUser ? (
-                <>
-                  <Typography.Title level={4} style={{ color: 'white' }}>
-                    Paypal Store
-                  </Typography.Title>
-                  <Tag color="purple">ADMIN</Tag>
-                </>
-              ) : (
-                'Paypal Store'
-              )}
-            </Space>
-          </Col>
-          <Col>
-            <Row justify="start" align="middle" gutter={[50, 0]}>
-              {/* <Col style={{ paddingTop: '10px' }}>
-                <Badge
-                  count={0}
-                  showZero
-                  color="white"
-                  style={{ color: 'black' }}
-                >
-                  <Avatar
-                    icon={<ShoppingCartOutlined />}
-                    style={{
-                      backgroundColor: 'transparent',
-                      cursor: 'pointer',
-                    }}
-                    size="large"
-                  />
-                </Badge>
-              </Col> */}
-              <Col>
-                <Tooltip
-                  placement="bottom"
-                  trigger="hover"
-                  title={
-                    <StyledButton
-                      type="link"
-                      onClick={() => {
-                        dispatch(onLogout());
-                        navigate('/guest');
-                        localStorage.removeItem(USER);
-                        localStorage.removeItem(IS_LOGGEDIN);
-                        localStorage.removeItem(USER_ROLE);
-                        localStorage.removeItem(USER_ID);
-                      }}
-                    >
-                      Log Out
-                    </StyledButton>
-                  }
-                  color="white"
-                >
-                  <Avatar
-                    style={{ backgroundColor: '#efdbff', color: 'black' }}
-                    size="large"
-                  >
-                    {`${authUserState?.data?.user_name.charAt(
-                      0
-                    )} ${authUserState?.data?.user_surname.charAt(0)}`}
-                  </Avatar>
-                </Tooltip>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Header>
+      <Admin />
     </Layout>
+    // <Layout style={{ minHeight: '100vh' }}>
+    //   <Header
+    //     style={{
+    //       height: '80px',
+    //       display: 'flex',
+    //     }}
+    //   >
+    //     <Row
+    //       justify="space-between"
+    //       align="middle"
+    //       style={{ width: '100%', padding: '0 80px' }}
+    //     >
+    //       <Col>
+    //         <Space align="baseline" size="large">
+    //           <RadarChartOutlined
+    //             style={{ color: 'white', fontSize: '25px' }}
+    //             title={`${isAdminUser ? 'Paypal Store ADMIN' : 'Paypal Store'}`}
+    //           />
+    //           {isAdminUser ? (
+    //             <>
+    //               <Typography.Title level={4} style={{ color: 'white' }}>
+    //                 Paypal Store
+    //               </Typography.Title>
+    //               <Tag color="purple">ADMIN</Tag>
+    //             </>
+    //           ) : (
+    //             'Paypal Store'
+    //           )}
+    //         </Space>
+    //       </Col>
+    //       <Col>
+    //         <Row justify="start" align="middle" gutter={[50, 0]}>
+    //           {/* <Col style={{ paddingTop: '10px' }}>
+    //             <Badge
+    //               count={0}
+    //               showZero
+    //               color="white"
+    //               style={{ color: 'black' }}
+    //             >
+    //               <Avatar
+    //                 icon={<ShoppingCartOutlined />}
+    //                 style={{
+    //                   backgroundColor: 'transparent',
+    //                   cursor: 'pointer',
+    //                 }}
+    //                 size="large"
+    //               />
+    //             </Badge>
+    //           </Col> */}
+    //           <Col>
+    //             <Tooltip
+    //               placement="bottom"
+    //               trigger="hover"
+    //               title={
+    //                 <StyledButton
+    //                   type="link"
+    //                   onClick={() => {
+    //                     dispatch(onLogout());
+    //                     navigate('/guest');
+    //                     localStorage.removeItem(USER);
+    //                     localStorage.removeItem(IS_LOGGEDIN);
+    //                     localStorage.removeItem(USER_ROLE);
+    //                     localStorage.removeItem(USER_ID);
+    //                   }}
+    //                 >
+    //                   Log Out
+    //                 </StyledButton>
+    //               }
+    //               color="white"
+    //             >
+    //               <Avatar
+    //                 style={{ backgroundColor: '#efdbff', color: 'black' }}
+    //                 size="large"
+    //               >
+    //                 {`${authUserState?.data?.user_name.charAt(
+    //                   0
+    //                 )} ${authUserState?.data?.user_surname.charAt(0)}`}
+    //               </Avatar>
+    //             </Tooltip>
+    //           </Col>
+    //         </Row>
+    //       </Col>
+    //     </Row>
+    //   </Header>
+    // </Layout>
   );
 }

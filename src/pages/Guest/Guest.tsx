@@ -51,7 +51,9 @@ export default function Guest() {
             </Typography.Title>
           </Col>
           <Col span={12}>
-            <EnthusiasticIcon />
+            <div className="guest-img">
+              <EnthusiasticIcon />
+            </div>
           </Col>
         </Row>
       </GenericContent>

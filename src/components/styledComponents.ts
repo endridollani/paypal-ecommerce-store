@@ -1,4 +1,4 @@
-import { Button, Input, Row } from 'antd';
+import { Button, Input, Modal, Row } from 'antd';
 import { Content, Header } from 'antd/lib/layout/layout';
 import styled from 'styled-components';
 
@@ -8,7 +8,7 @@ export const StyledInput = styled(Input)`
 `;
 
 export const StyledRow = styled(Row)`
-  padding: 5em;
+  padding: 4em;
   border: 1px solid lightgrey;
   border-radius: 5px;
   background-color: white;
@@ -50,14 +50,6 @@ export const StyledButton = styled(Button)`
     }
   }
 `;
-export const CenterContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  min-height: 100vh;
-`;
-
 export const StyledHeader = styled(Header)`
   height: 10vh;
   background-color: inherit;
@@ -73,15 +65,38 @@ export const StyledHeader = styled(Header)`
     font-size: 45px;
     color: #0050b3;
   }
+  .capitalize {
+    text-transform: capitalize;
+  }
+  .avatar {
+    background-color: #531dab;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .options-btn {
+    svg {
+      color: #262626;
+    }
+  }
+  .admin-tag {
+    color: #262626;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #1d39c4;
+    letter-spacing: 2px;
+    font-size: 1em;
+  }
   padding: 0 10%;
 `;
 
 export const StyledGuestContent = styled(Content)`
-  padding: 4em 15%;
-
+  padding: 2% 10%;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
   .hero-section-text {
-    font-size: 5em;
-    width: 80%;
+    font-size: 4.8em;
     color: #434343;
   }
   .hero-section-word-emphasize {
@@ -92,7 +107,7 @@ export const StyledGuestContent = styled(Content)`
       content: '';
       position: absolute;
       bottom: 16px;
-      left: -4.8em;
+      left: 1.2em;
       width: 150px;
       height: 14px;
       transform: skew(-12deg) translateX(-50%);
@@ -106,6 +121,26 @@ export const StyledGuestContent = styled(Content)`
     position: fixed;
     bottom: 20px;
     left: 48%;
-    right: 0;
+  }
+`;
+
+export const CustomModal = styled(Modal)`
+  & .ant-modal-content {
+    border-radius: 12px;
+    padding-top: 12px;
+  }
+
+  & .ant-modal-header {
+    border-radius: 12px;
+  }
+
+  & .ant-modal-close {
+    top: 24px;
+    right: 12px;
+  }
+
+  & .form-item-styled {
+    border-radius: 5px;
+    padding: 1em;
   }
 `;
