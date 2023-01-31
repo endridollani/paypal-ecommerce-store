@@ -1,65 +1,60 @@
-import { Button, Col, Image, Layout, Row, Space, Typography } from 'antd';
-import { Content, Footer, Header } from 'antd/lib/layout/layout';
-import { RadarChartOutlined } from '@ant-design/icons';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Button, Col, Image, Layout, Row, Typography } from 'antd';
+import { Content, Footer } from 'antd/lib/layout/layout';
 import React from 'react';
-import { StyledButton } from '../../components/styledComponents';
+import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  StyledButton,
+  StyledGuestContent,
+} from '../../components/styledComponents';
+import GenericContent from '../../components/UI/GenericContent/GenericContent';
+import GenericHeader from '../../components/UI/GenericHeader';
+import EnthusiasticIcon from '../../icons/EnthusiasticIcon';
 
 export default function Guest() {
+  const navigate = useNavigate();
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Header>
-        <Row justify="space-between">
+      <GenericHeader>
+        <Row gutter={[40, 0]}>
           <Col>
-            <Space align="baseline" size="large">
-              <RadarChartOutlined
-                style={{ color: 'white', fontSize: '25px' }}
-                title="Paypal Store"
-              />
-              <Typography.Title level={4} style={{ color: 'white' }}>
-                PayPal Store
-              </Typography.Title>
-            </Space>
+            <StyledButton
+              className="btn-light style-underline"
+              type="link"
+              ghost
+              size="large"
+              onClick={() => navigate('/login')}
+            >
+              Login
+            </StyledButton>
           </Col>
           <Col>
-            <Row gutter={[30, 0]}>
-              <Col>
-                <Button
-                  type="link"
-                  style={{ color: 'white' }}
-                  ghost
-                  size="middle"
-                  href="/register"
-                >
-                  Register
-                </Button>
-              </Col>
-              <Col>
-                <StyledButton type="default" ghost size="middle" href="/login">
-                  Login
-                </StyledButton>
-              </Col>
-            </Row>
+            <StyledButton
+              type="link"
+              className="style-underline"
+              ghost
+              size="large"
+              onClick={() => navigate('/register')}
+            >
+              Register
+            </StyledButton>
           </Col>
         </Row>
-      </Header>
-      <Content style={{ height: '82vh' }}>
-        <Image
-          width="100%"
-          height="100%"
-          preview={false}
-          src="https://wallpapercave.com/wp/wp2747211.jpg"
-        />
-      </Content>
-      <Footer
-        style={{
-          textAlign: 'center',
-          backgroundColor: '#001529',
-        }}
-      >
-        <Typography.Text strong style={{ color: 'white' }}>
-          PayPal Store ©2023
-        </Typography.Text>
-      </Footer>
+      </GenericHeader>
+      <GenericContent>
+        <Row justify="start" align="middle">
+          <Col span={12}>
+            <Typography.Title level={1} className="hero-section-text">
+              <span>Everything you want in one </span>
+              <span className="hero-section-word-emphasize">store</span>
+            </Typography.Title>
+          </Col>
+          <Col span={12}>
+            <EnthusiasticIcon />
+          </Col>
+        </Row>
+      </GenericContent>
     </Layout>
   );
 }

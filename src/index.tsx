@@ -5,6 +5,7 @@ import App from './App';
 import store from './redux/store';
 
 import 'antd/dist/antd.min.css';
+import './index.css';
 
 const app = (
   <Provider store={store}>

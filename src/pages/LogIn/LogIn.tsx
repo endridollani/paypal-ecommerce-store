@@ -1,18 +1,17 @@
-import { Col, Form, Row, Spin } from 'antd';
+import { Col, Form, Layout, Row, Spin } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import {
-  CenterContainer,
-  StyledButton,
-  StyledInput,
-} from '../../components/styledComponents';
+import { StyledButton, StyledInput } from '../../components/styledComponents';
 import Card from '../../components/Card';
 import { isAdmin, isUser } from '../../utils/utilFunctions';
 import { onLogin } from '../../redux/authUser/actions';
 import { IS_LOGGEDIN } from '../../utils/constants';
+import GenericHeader from '../../components/UI/GenericHeader';
+import LoginPageIcon from '../../icons/LoginPageIcon';
+import GenericContent from '../../components/UI/GenericContent/GenericContent';
 
 export interface LoginUserData {
   email: string;
@@ -55,55 +54,77 @@ export default function LogIn() {
   }, [authUserState]);
 
   return (
-    <CenterContainer>
-      <Card title="Log in" centerTitle>
-        <Row justify="space-around" gutter={[0, 20]}>
-          <Col span={24}>
-            <Spin spinning={loading}>
-              <Form
-                size="large"
-                layout="vertical"
-                form={form}
-                onFinish={onFinish}
-              >
-                <Form.Item
-                  name="email"
-                  label="Email"
-                  rules={[{ required: true, message: 'Email is required!' }]}
-                >
-                  <StyledInput placeholder="Email" />
-                </Form.Item>
-                <Form.Item
-                  name="password"
-                  label="Password"
-                  rules={[{ required: true, message: 'Password is required!' }]}
-                >
-                  <StyledInput type="password" placeholder="Password" />
-                </Form.Item>
-              </Form>
-            </Spin>
-          </Col>
-          <Col span={24}>
-            <Row justify="end" gutter={[20, 0]}>
-              <Col>
-                <StyledButton size="large" type="link" href="/register">
-                  Register
-                </StyledButton>
-              </Col>
-              <Col />
-              <Col>
-                <StyledButton
-                  size="large"
-                  type="primary"
-                  onClick={() => form.submit()}
-                >
-                  Log in
-                </StyledButton>
-              </Col>
-            </Row>
+    <Layout style={{ minHeight: '100vh' }}>
+      <GenericHeader>
+        <Row gutter={[40, 0]}>
+          <Col>
+            <StyledButton
+              type="link"
+              className="style-underline"
+              ghost
+              size="large"
+              onClick={() => navigate('/register')}
+            >
+              Register
+            </StyledButton>
           </Col>
         </Row>
-      </Card>
-    </CenterContainer>
+      </GenericHeader>
+      <GenericContent>
+        <Row justify="start" align="middle">
+          <Col span={11}>
+            <LoginPageIcon />
+          </Col>
+          <Col span={12}>
+            <Card title="Log in" centerTitle>
+              <Row justify="space-around" gutter={[0, 20]}>
+                <Col span={24}>
+                  <Spin spinning={loading}>
+                    <Form
+                      size="large"
+                      layout="vertical"
+                      form={form}
+                      onFinish={onFinish}
+                    >
+                      <Form.Item
+                        name="email"
+                        label="Email"
+                        rules={[
+                          { required: true, message: 'Email is required!' },
+                        ]}
+                      >
+                        <StyledInput placeholder="Email" />
+                      </Form.Item>
+                      <Form.Item
+                        name="password"
+                        label="Password"
+                        rules={[
+                          { required: true, message: 'Password is required!' },
+                        ]}
+                      >
+                        <StyledInput type="password" placeholder="Password" />
+                      </Form.Item>
+                    </Form>
+                  </Spin>
+                </Col>
+                <Col span={24}>
+                  <Row justify="end">
+                    <Col>
+                      <StyledButton
+                        size="large"
+                        type="primary"
+                        onClick={() => form.submit()}
+                      >
+                        Log in
+                      </StyledButton>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Card>
+          </Col>
+        </Row>
+      </GenericContent>
+    </Layout>
   );
 }
