@@ -13,6 +13,7 @@ import {
 } from '../../components/styledComponents';
 import GenericContent from '../../components/UI/GenericContent/GenericContent';
 import GenericHeader from '../../components/UI/GenericHeader';
+import UsersList from '../../components/UsersList';
 import EnthusiasticIcon from '../../icons/EnthusiasticIcon';
 import Header from './Header';
 
@@ -27,7 +28,7 @@ export default function Admin() {
           <Col span={24}>
             <Tabs tabPosition="left">
               <TabPane key="0" tab="Users">
-                <h1>Hello 1</h1>
+                <UsersList />
               </TabPane>
               <TabPane key="1" tab="Products">
                 <ProductList />
