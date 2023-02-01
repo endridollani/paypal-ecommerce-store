@@ -78,6 +78,14 @@ export const StyledHeader = styled(Header)`
       color: #262626;
     }
   }
+  .header-menu {
+    [class*='ant-btn'] {
+      border: none;
+      background-color: inherit;
+      padding: 0;
+      margin: 0;
+    }
+  }
   .admin-tag {
     color: #262626;
     padding: 5px;
@@ -121,6 +129,29 @@ export const StyledGuestContent = styled(Content)`
     position: fixed;
     bottom: 20px;
     left: 48%;
+  }
+
+  [class*='ant-tabs-nav'] {
+    padding-top: 20px;
+    .ant-tabs-nav-list {
+      padding: 20px;
+      gap: 30px;
+    }
+    .ant-tabs-tab {
+      padding: 20px;
+      border: 1px solid #d9d9d9;
+      border-radius: 5px;
+      justify-content: center;
+    }
+
+    .ant-tabs-tab-active {
+      padding: 20px;
+      background-color: #0050b3;
+      border-radius: 5px;
+      .ant-tabs-tab-btn {
+        color: white;
+      }
+    }
   }
 `;
 

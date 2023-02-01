@@ -11,9 +11,11 @@ type AdminInfo = {
 };
 
 export default function AdminInfo({ open, close }: AdminInfo) {
-  const authUserState: UserData = useSelector((state: any) => state.authUser);
+  const authUserState: UserData | undefined = useSelector(
+    (state: any) => state.authUser
+  );
   return (
-    <GenericModal open={open} close={close} title="Information">
+    <GenericModal open={open} close={close} title="Account Information">
       <Row justify="start" gutter={[0, 20]}>
         <Col span={11} offset={2}>
           <Space direction="vertical">
@@ -45,7 +47,7 @@ export default function AdminInfo({ open, close }: AdminInfo) {
           <Space direction="vertical">
             <Typography.Text>Gender:</Typography.Text>
             <Typography.Title level={5}>
-              {authUserState.data.user_gender || '-'}
+              {authUserState?.data?.user_gender || '-'}
             </Typography.Title>
           </Space>
         </Col>
@@ -53,7 +55,7 @@ export default function AdminInfo({ open, close }: AdminInfo) {
           <Space direction="vertical">
             <Typography.Text>Birth Date:</Typography.Text>
             <Typography.Title level={5}>
-              {authUserState.data.user_birthday || '-'}
+              {authUserState?.data?.user_birthday || '-'}
             </Typography.Title>
           </Space>
         </Col>

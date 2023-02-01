@@ -1,3 +1,4 @@
+import { PlusCircleTwoTone } from '@ant-design/icons';
 import { Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -33,11 +34,10 @@ export default function ProductList() {
         <Row justify="end">
           <Col>
             <StyledButton
-              type="link"
-              className="style-underline"
-              ghost
+              type="primary"
               size="large"
               onClick={() => onToogleModal()}
+              icon={<PlusCircleTwoTone />}
             >
               Add Product
             </StyledButton>
