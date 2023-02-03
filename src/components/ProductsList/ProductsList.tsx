@@ -144,7 +144,7 @@ export default function ProductList() {
           </Col>
         </Row>
       </Col>
-      <Col>
+      <Col span={24}>
         {products.length || dummyProducts.length ? (
           <ProductCard products={dummyProducts} />
         ) : (

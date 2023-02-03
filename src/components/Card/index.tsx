@@ -1,9 +1,9 @@
 import { Col, Row, Typography } from 'antd';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { StyledRow } from '../styledComponents';
 
 type IProps = {
-  title?: string;
+  title?: string | ReactNode;
   centerTitle?: boolean;
   children?: React.ReactNode | null;
 };

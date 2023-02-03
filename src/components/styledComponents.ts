@@ -1,4 +1,5 @@
-import { Button, Input, Modal, Row } from 'antd';
+import { Button, Form, Input, Modal, Row } from 'antd';
+import TextArea from 'antd/lib/input/TextArea';
 import { Content, Header } from 'antd/lib/layout/layout';
 import styled from 'styled-components';
 
@@ -16,6 +17,16 @@ export const StyledRow = styled(Row)`
   [class*='ant-form-item-explain-error'] {
     display: flex;
     padding-top: 5px;
+  }
+`;
+
+export const FormItemStyled = styled(Form.Item)`
+  font-weight: 400;
+  text-transform: capitalize;
+  margin-top: 1rem;
+  display: block;
+  .ant-picker {
+    width: 100%;
   }
 `;
 
@@ -125,10 +136,11 @@ export const StyledGuestContent = styled(Content)`
   }
 
   .footer {
+    margin-top: 1rem;
     color: #8c8c8c;
-    position: fixed;
-    bottom: 20px;
-    left: 48%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   [class*='ant-tabs-nav'] {
@@ -174,4 +186,9 @@ export const CustomModal = styled(Modal)`
     border-radius: 5px;
     padding: 1em;
   }
+`;
+
+export const StyledTextArea = styled(TextArea)`
+  border-radius: 8px;
+  height: 44px;
 `;
