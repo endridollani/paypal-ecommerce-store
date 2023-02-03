@@ -1,40 +1,147 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { InboxOutlined } from '@ant-design/icons';
-import { Col, Form, Row, Spin, UploadProps } from 'antd';
+import { Col, Row } from 'antd';
 import { useForm } from 'antd/es/form/Form';
-import TextArea from 'antd/lib/input/TextArea';
-import { RcFile } from 'antd/lib/upload';
-import Dragger from 'antd/lib/upload/Dragger';
-import { reject } from 'lodash';
-import { resolve } from 'path';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import { createProduct } from '../../../api/productService';
-import { ProductCreateType } from '../../../types/Product';
-import { prepereFile } from '../../../utils/utilFunctions';
+import { InputTypes } from '../../../types/FormTypes';
+import { ProductCreateType, ProductModelType } from '../../../types/Product';
+import GenericForm from '../../GenericForm/GenericForm';
 import GenericModal from '../../GenericModal/GenericModal';
-import { StyledButton, StyledInput } from '../../styledComponents';
+import { FormItemStyled, StyledButton } from '../../styledComponents';
 
 type ProductModalProps = {
   open: boolean;
   close: () => void;
   onSubmit: () => void;
+  product?: ProductModelType | undefined;
 };
 
 export default function ProductModal({
   open,
   close,
   onSubmit,
+  product,
 }: ProductModalProps) {
   const [form] = useForm();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [fileList, setFileList] = useState<RcFile[]>([]);
+
+  const ProductFormConfiguration: any[][] = useMemo(
+    () => [
+      [
+        {
+          col: 11,
+          offset: 0,
+          name: 'name',
+          label: 'Name',
+          type: 'input',
+          defaultValue: product?.name,
+          rules: [
+            {
+              required: true,
+              message: 'This field is required',
+            },
+          ],
+        },
+        {
+          col: 11,
+          offset: 2,
+          name: 'price',
+          label: 'Price',
+          type: 'input',
+          inputProps: { type: 'number', min: 0 },
+          defaultValue: product?.price,
+          rules: [
+            {
+              required: true,
+              message: 'This field is required',
+            },
+          ],
+        },
+      ],
+      [
+        {
+          col: 11,
+          offset: 0,
+          name: 'discounted_price',
+          label: 'Discounted Price',
+          type: InputTypes.INPUT,
+          inputProps: { type: 'number', min: 0 },
+          defaultValue: product?.discounted_price,
+          rules: [
+            {
+              required: true,
+              message: 'This field is required',
+            },
+          ],
+        },
+        {
+          col: 11,
+          offset: 2,
+          name: 'stock',
+          label: 'Stock',
+          type: 'input',
+          inputProps: { type: 'number', min: 0 },
+          defaultValue: product?.stock,
+          rules: [
+            {
+              required: true,
+              message: 'This field is required',
+            },
+          ],
+        },
+      ],
+      [
+        {
+          col: 11,
+          offset: 0,
+          name: 'category',
+          label: 'category',
+          type: 'input',
+          defaultValue: product?.category,
+          rules: [
+            {
+              required: true,
+              message: 'This field is required',
+            },
+          ],
+        },
+        {
+          col: 11,
+          offset: 2,
+          name: 'images',
+          label: 'Image URL',
+          type: 'input',
+          defaultValue: product?.images[0],
+          rules: [
+            {
+              required: true,
+              message: 'This field is required',
+            },
+          ],
+        },
+      ],
+      [
+        {
+          col: 24,
+          offset: 0,
+          name: 'description',
+          label: 'Description',
+          type: InputTypes.TEXTAREA,
+          defaultValue: product?.description,
+          rules: [
+            {
+              required: true,
+              message: 'This field is required',
+            },
+          ],
+        },
+      ],
+    ],
+    []
+  );
 
   const onFinish = async (values: ProductCreateType) => {
     setIsLoading(true);
-    const imageContent = await prepereFile(
-      form.getFieldValue('images').file?.originFileObj
-    );
     const payload: ProductCreateType = {
       ...values,
       discounted_price: Number(values.discounted_price),
@@ -42,6 +149,11 @@ export default function ProductModal({
       price: Number(values.price),
       images: ['https://pixlr.com/images/index/remove-bg.webp'],
     };
+    if (product?.id) {
+      console.log(111, 'Update', product);
+      close();
+      return;
+    }
     createProduct(payload)
       .then((response) => {
         if (response.status === 201) {
@@ -58,124 +170,45 @@ export default function ProductModal({
       });
   };
 
-  const props: UploadProps = {
-    name: 'file',
-    maxCount: 1,
-  };
   return (
-    <GenericModal title="Add Product" open={open} close={close}>
-      <Row justify="space-around" gutter={[0, 20]}>
-        <Col span={24}>
-          <Spin spinning={isLoading}>
-            <Form
-              size="large"
-              layout="vertical"
-              form={form}
-              onFinish={onFinish}
-            >
-              <Row justify="space-between">
-                <Col span={11}>
-                  <Form.Item
-                    name="name"
-                    label="Name"
-                    rules={[{ required: true, message: 'Name is required!' }]}
-                  >
-                    <StyledInput placeholder="Name" />
-                  </Form.Item>
-                </Col>
-                <Col span={11}>
-                  <Form.Item
-                    name="price"
-                    label="Price"
-                    rules={[{ required: true, message: 'Price is required!' }]}
-                  >
-                    <StyledInput min={0} type="number" placeholder="Price" />
-                  </Form.Item>
-                </Col>
-
-                <Col span={11}>
-                  <Form.Item
-                    name="discounted_price"
-                    label="Discounted Price"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Discounted Price is required!',
-                      },
-                    ]}
-                  >
-                    <StyledInput
-                      min={0}
-                      type="number"
-                      placeholder="Discounted Price"
-                    />
-                  </Form.Item>
-                </Col>
-                <Col span={11}>
-                  <Form.Item
-                    name="stock"
-                    label="Stock"
-                    rules={[{ required: true, message: 'Stock is required!' }]}
-                  >
-                    <StyledInput min={0} type="number" placeholder="Stock" />
-                  </Form.Item>
-                </Col>
-                <Col span={11}>
-                  <Form.Item
-                    name="category"
-                    label="Category"
-                    rules={[
-                      { required: true, message: 'Category is required!' },
-                    ]}
-                  >
-                    <StyledInput placeholder="Category" />
-                  </Form.Item>
-                </Col>
-                <Col span={11}>
-                  <Form.Item
-                    name="images"
-                    label="Image url"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Image url is required!',
-                      },
-                    ]}
-                  >
-                    <StyledInput placeholder="Image url" />
-                  </Form.Item>
-                </Col>
-                <Col span={24}>
-                  <Form.Item
-                    name="description"
-                    label="Description"
-                    rules={[
-                      { required: true, message: 'Description is required!' },
-                    ]}
-                  >
-                    <TextArea
-                      className="form-item-styled"
-                      placeholder="Description"
-                    />
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Form>
-          </Spin>
-        </Col>
-        <Col span={24}>
+    <GenericModal
+      title={`${product ? 'Edit' : 'Add'} Product`}
+      open={open}
+      close={close}
+    >
+      <GenericForm
+        formConfigurations={ProductFormConfiguration}
+        form={form}
+        onFinish={onFinish}
+        loading={isLoading}
+      >
+        <FormItemStyled>
           <Row justify="end">
-            <StyledButton
-              type="primary"
-              size="large"
-              htmlType="submit"
-              onClick={() => form.submit()}
-            >
-              Submit
-            </StyledButton>
+            <Col>
+              <StyledButton
+                type="primary"
+                size="large"
+                htmlType="reset"
+                danger
+                ghost
+                onClick={() => close()}
+              >
+                Cancel
+              </StyledButton>
+            </Col>
+            <Col offset={2}>
+              <StyledButton
+                type="primary"
+                size="large"
+                htmlType="submit"
+                onClick={() => form.submit()}
+              >
+                Submit
+              </StyledButton>
+            </Col>
           </Row>
-        </Col>
-      </Row>
+        </FormItemStyled>
+      </GenericForm>
     </GenericModal>
   );
 }

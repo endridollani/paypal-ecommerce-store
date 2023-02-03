@@ -1,14 +1,20 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Card, Col, Image, List, Row, Skeleton, Space, Typography } from 'antd';
-import React from 'react';
+import { Card, Image, List, Row, Skeleton, Space } from 'antd';
+import React, { useState } from 'react';
 import { ProductModelType } from '../../../types/Product';
+import CardItem from '../../Card/CardItem';
 import { StyledButton } from '../../styledComponents';
+import ProductModal from '../ProductModal';
 
 type ProductCardProps = {
   products: ProductModelType[];
 };
-
 export default function ProductCard({ products }: ProductCardProps) {
+  const [open, isOpen] = useState<boolean>(false);
+  const [product, setProduct] = useState<ProductModelType>();
+
+  const toggleModal = () => isOpen((open) => !open);
+
   return (
     <>
       <List
@@ -26,6 +32,7 @@ export default function ProductCard({ products }: ProductCardProps) {
         dataSource={products}
         renderItem={(p) => (
           <Card
+            title={p.name}
             style={{ margin: '10px', borderRadius: '8px' }}
             cover={
               <Skeleton
@@ -43,6 +50,10 @@ export default function ProductCard({ products }: ProductCardProps) {
                   icon={<EditOutlined />}
                   size="small"
                   className="style-underline"
+                  onClick={() => {
+                    toggleModal();
+                    setProduct(p);
+                  }}
                 />
                 <StyledButton
                   icon={<DeleteOutlined />}
@@ -55,61 +66,30 @@ export default function ProductCard({ products }: ProductCardProps) {
             }
           >
             <Card.Meta
-              title={
-                <Typography.Title style={{ textAlign: 'center' }} level={4}>
-                  {p.name}
-                </Typography.Title>
-              }
               description={
-                <Row justify="start" gutter={[0, 20]}>
-                  <Col span={11} offset={2}>
-                    <Space direction="vertical">
-                      <Typography.Text>Description:</Typography.Text>
-                      <Typography.Title level={5}>
-                        {p?.description || '-'}
-                      </Typography.Title>
-                    </Space>
-                  </Col>
-                  <Col span={8} offset={2}>
-                    <Space direction="vertical">
-                      <Typography.Text>Price:</Typography.Text>
-                      <Typography.Title level={5}>
-                        {p?.price || '-'}
-                      </Typography.Title>
-                    </Space>
-                  </Col>
-
-                  <Col offset={2} span={11}>
-                    <Space direction="vertical">
-                      <Typography.Text>Discounted Price:</Typography.Text>
-                      <Typography.Title level={5}>
-                        {p?.discounted_price || '-'}
-                      </Typography.Title>
-                    </Space>
-                  </Col>
-
-                  <Col offset={2} span={8}>
-                    <Space direction="vertical">
-                      <Typography.Text>Stock:</Typography.Text>
-                      <Typography.Title level={5}>
-                        {p?.stock || '-'}
-                      </Typography.Title>
-                    </Space>
-                  </Col>
-                  <Col offset={2} span={8}>
-                    <Space direction="vertical">
-                      <Typography.Text>Category:</Typography.Text>
-                      <Typography.Title level={5}>
-                        {p?.category || '-'}
-                      </Typography.Title>
-                    </Space>
-                  </Col>
+                <Row justify="space-between" gutter={[0, 10]}>
+                  <CardItem label="Description:" value={p?.description} />
+                  <CardItem label="Price:" value={p?.price} />
+                  <CardItem
+                    label="Discounted Price:"
+                    value={p?.discounted_price}
+                  />
+                  <CardItem label="Stock:" value={p?.stock} />
+                  <CardItem label="Category:" value={p?.category} />
                 </Row>
               }
             />
           </Card>
         )}
       />
+      {open && product && (
+        <ProductModal
+          open={open}
+          onSubmit={() => console.log('submited')}
+          close={() => toggleModal()}
+          product={product}
+        />
+      )}
     </>
   );
 }
