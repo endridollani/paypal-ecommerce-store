@@ -1,10 +1,11 @@
 import { Col, Row } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import React, { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { createProduct } from '../../../api/productService';
+import { createProduct, updateProduct } from '../../../api/productService';
 import { InputTypes } from '../../../types/FormTypes';
-import { ProductCreateType, ProductModelType } from '../../../types/Product';
+import { ProductModelType } from '../../../types/Product';
 import GenericForm from '../../GenericForm/GenericForm';
 import GenericModal from '../../GenericModal/GenericModal';
 import { FormItemStyled, StyledButton } from '../../styledComponents';
@@ -12,18 +13,17 @@ import { FormItemStyled, StyledButton } from '../../styledComponents';
 type ProductModalProps = {
   open: boolean;
   close: () => void;
-  onSubmit: () => void;
   product?: ProductModelType | undefined;
 };
 
 export default function ProductModal({
   open,
   close,
-  onSubmit,
   product,
 }: ProductModalProps) {
   const [form] = useForm();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [, setSearchParams] = useSearchParams();
 
   const ProductFormConfiguration: any[][] = useMemo(
     () => [
@@ -31,10 +31,10 @@ export default function ProductModal({
         {
           col: 11,
           offset: 0,
-          name: 'name',
+          name: 'product_name',
           label: 'Name',
           type: 'input',
-          defaultValue: product?.name,
+          defaultValue: product?.product_name,
           rules: [
             {
               required: true,
@@ -45,11 +45,11 @@ export default function ProductModal({
         {
           col: 11,
           offset: 2,
-          name: 'price',
+          name: 'product_price',
           label: 'Price',
           type: 'input',
           inputProps: { type: 'number', min: 0 },
-          defaultValue: product?.price,
+          defaultValue: product?.product_price,
           rules: [
             {
               required: true,
@@ -62,11 +62,11 @@ export default function ProductModal({
         {
           col: 11,
           offset: 0,
-          name: 'discounted_price',
+          name: 'product_discounted_price',
           label: 'Discounted Price',
           type: InputTypes.INPUT,
           inputProps: { type: 'number', min: 0 },
-          defaultValue: product?.discounted_price,
+          defaultValue: product?.product_discounted_price,
           rules: [
             {
               required: true,
@@ -77,11 +77,11 @@ export default function ProductModal({
         {
           col: 11,
           offset: 2,
-          name: 'stock',
+          name: 'product_stock',
           label: 'Stock',
           type: 'input',
           inputProps: { type: 'number', min: 0 },
-          defaultValue: product?.stock,
+          defaultValue: product?.product_stock,
           rules: [
             {
               required: true,
@@ -94,10 +94,10 @@ export default function ProductModal({
         {
           col: 11,
           offset: 0,
-          name: 'category',
+          name: 'product_category',
           label: 'category',
           type: 'input',
-          defaultValue: product?.category,
+          defaultValue: product?.product_category,
           rules: [
             {
               required: true,
@@ -124,10 +124,10 @@ export default function ProductModal({
         {
           col: 24,
           offset: 0,
-          name: 'description',
+          name: 'product_description',
           label: 'Description',
           type: InputTypes.TEXTAREA,
-          defaultValue: product?.description,
+          defaultValue: product?.product_description,
           rules: [
             {
               required: true,
@@ -140,17 +140,28 @@ export default function ProductModal({
     []
   );
 
-  const onFinish = async (values: ProductCreateType) => {
+  const onFinish = async (values: any) => {
     setIsLoading(true);
-    const payload: ProductCreateType = {
-      ...values,
-      discounted_price: Number(values.discounted_price),
-      stock: Number(values.stock),
-      price: Number(values.price),
-      images: ['https://pixlr.com/images/index/remove-bg.webp'],
+    const payload: any = {
+      name: values.product_name,
+      category: values.product_category,
+      description: values.product_description,
+      discounted_price: Number(values.product_discounted_price),
+      stock: Number(values.product_stock),
+      price: Number(values.product_price),
+      images: [values.images],
     };
-    if (product?.id) {
-      console.log(111, 'Update', product);
+    if (product?.product_id) {
+      updateProduct(product.product_id, payload)
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success('Product updated successfully!');
+            setSearchParams('edit-product=true');
+          }
+        })
+        .catch(() => {
+          toast.error('Product faild to update!');
+        });
       close();
       return;
     }
@@ -158,7 +169,7 @@ export default function ProductModal({
       .then((response) => {
         if (response.status === 201) {
           toast.success('Product created successfully!');
-          onSubmit();
+          setSearchParams('add-product=true');
         }
       })
       .catch(() => {
@@ -197,12 +208,7 @@ export default function ProductModal({
               </StyledButton>
             </Col>
             <Col offset={2}>
-              <StyledButton
-                type="primary"
-                size="large"
-                htmlType="submit"
-                onClick={() => form.submit()}
-              >
+              <StyledButton type="primary" size="large" htmlType="submit">
                 Submit
               </StyledButton>
             </Col>
