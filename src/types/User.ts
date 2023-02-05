@@ -7,7 +7,7 @@ export interface UserModelType {
   user_name: string;
   user_surname: string;
   user_type: string;
-  id: number;
+  user_id: number;
 }
 export interface UserData {
   data: UserModelType;

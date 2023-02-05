@@ -15,6 +15,7 @@ import GenericContent from '../../components/UI/GenericContent/GenericContent';
 import GenericHeader from '../../components/UI/GenericHeader';
 import UsersList from '../../components/UsersList';
 import EnthusiasticIcon from '../../icons/EnthusiasticIcon';
+import AccountSettings from './AccountSettings';
 import Header from './Header';
 
 export default function Admin() {
@@ -34,7 +35,7 @@ export default function Admin() {
                 <ProductList />
               </TabPane>
               <TabPane key="2" tab="Settings">
-                <h1>Edit</h1>
+                <AccountSettings />
               </TabPane>
             </Tabs>
           </Col>

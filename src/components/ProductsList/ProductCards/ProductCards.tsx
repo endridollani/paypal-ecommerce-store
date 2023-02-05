@@ -129,6 +129,7 @@ export default function ProductCards() {
                   <CardItem
                     label="Description:"
                     value={p?.product_description}
+                    span={24}
                   />
                   <CardItem label="Price:" value={p?.product_price} />
                   <CardItem
