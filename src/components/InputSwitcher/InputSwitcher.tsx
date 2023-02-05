@@ -1,5 +1,6 @@
 import React from 'react';
 import { InputType, InputTypes, RulesType } from '../../types/FormTypes';
+import DatePickerComponent from '../DatePicker';
 import InputComponent from '../Input/InputComponent';
 import TextAreaComponent from '../TextArea/TextAreaComponent';
 
@@ -33,7 +34,7 @@ const InputSwitcher: React.FC<Props> = ({
       return (
         <InputComponent
           name={name}
-          key="input"
+          key={InputTypes.INPUT}
           placeholder={placeholder}
           rules={rules}
           inputProps={inputProps}
@@ -45,9 +46,18 @@ const InputSwitcher: React.FC<Props> = ({
       return (
         <TextAreaComponent
           name={name}
-          key="textarea"
+          key={InputTypes.TEXTAREA}
           placeholder={placeholder}
           inputProps={textAreaProps}
+          rules={rules}
+        />
+      );
+    case InputTypes.DATEPICKER:
+      return (
+        <DatePickerComponent
+          name={name}
+          key={InputTypes.DATEPICKER}
+          placeholder={placeholder}
           rules={rules}
         />
       );
@@ -55,7 +65,7 @@ const InputSwitcher: React.FC<Props> = ({
       return (
         <InputComponent
           name={name}
-          key="input"
+          key={InputTypes.INPUT}
           placeholder={placeholder}
           rules={rules}
           inputProps={inputProps}

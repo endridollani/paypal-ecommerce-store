@@ -1,4 +1,6 @@
+import { RangePickerProps } from 'antd/lib/date-picker';
 import { RcFile } from 'antd/lib/upload';
+import moment from 'moment';
 import { UserAuthDataType } from '../redux/authUser/types';
 import { AUTH_ROLES } from '../types/Auth';
 
@@ -24,3 +26,7 @@ export const getBase64 = (file: RcFile): Promise<string> =>
 
 export const prepereFile = async (file: RcFile): Promise<string> =>
   getBase64(file).then((base64) => base64.split(',')[1]);
+
+export const disabledDate: RangePickerProps['disabledDate'] = (current) =>
+  moment().subtract(18, 'years').isBefore(current);
+export const convertToUtc = (date: any) => moment.utc(date).format();
