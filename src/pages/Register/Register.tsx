@@ -1,19 +1,103 @@
-import { Col, Form, Layout, Row, Spin } from 'antd';
+import { Col, Layout, Row } from 'antd';
 import { useForm } from 'antd/es/form/Form';
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { StyledButton, StyledInput } from '../../components/styledComponents';
+import { toast } from 'react-toastify';
+import { StyledButton } from '../../components/styledComponents';
 import Card from '../../components/Card';
 import GenericHeader from '../../components/UI/GenericHeader';
 import GenericContent from '../../components/UI/GenericContent/GenericContent';
 import RegisterPageIcon from '../../icons/RegisterPageIcon';
+import { InputTypes } from '../../types/FormTypes';
+import GenericForm from '../../components/GenericForm';
+import { RegisterType } from '../../types/Register';
+import { register } from '../../api/authService';
 
 export default function Register() {
   const [form] = useForm();
   const navigate = useNavigate();
   const [loading, isLoading] = useState(false);
-  const onFinish = async () => {
+
+  const RegisterFormConfiguration: any[][] = useMemo(
+    () => [
+      [
+        {
+          col: 11,
+          offset: 0,
+          name: 'name',
+          label: 'Name',
+          type: 'input',
+          rules: [
+            {
+              required: true,
+              message: 'This field is required',
+            },
+          ],
+        },
+        {
+          col: 11,
+          offset: 2,
+          name: 'surname',
+          label: 'Surname',
+          type: 'input',
+          rules: [
+            {
+              required: true,
+              message: 'This field is required',
+            },
+          ],
+        },
+      ],
+      [
+        {
+          col: 24,
+          offset: 0,
+          name: 'email',
+          label: ' Email',
+          type: InputTypes.INPUT,
+          rules: [
+            {
+              required: true,
+              message: 'This field is required',
+            },
+          ],
+        },
+      ],
+      [
+        {
+          col: 24,
+          offset: 0,
+          name: 'password',
+          label: 'Password',
+          type: 'input',
+          inputProps: { type: 'password' },
+          rules: [
+            {
+              required: true,
+              message: 'This field is required',
+            },
+          ],
+        },
+      ],
+    ],
+    []
+  );
+
+  const onFinish = async (payload: RegisterType) => {
     isLoading(true);
+    register(payload)
+      .then((response) => {
+        if (response.status === 201) {
+          toast.success('Registered successfully!');
+          navigate('/');
+        }
+      })
+      .catch(() => {
+        toast.error('Registration failed!');
+      })
+      .finally(() => {
+        isLoading(false);
+      });
   };
 
   return (
@@ -40,90 +124,16 @@ export default function Register() {
           </Col>
           <Col span={12}>
             <Card title="Register" centerTitle>
-              <Row justify="center" gutter={[0, 20]}>
-                <Col span={24}>
-                  <Spin spinning={loading}>
-                    <Form
-                      size="large"
-                      layout="vertical"
-                      form={form}
-                      onFinish={onFinish}
-                    >
-                      <Row justify="start">
-                        <Col span={11}>
-                          <Form.Item
-                            name="name"
-                            label="First Name"
-                            rules={[
-                              {
-                                required: true,
-                                message: 'First name is required!',
-                              },
-                            ]}
-                          >
-                            <StyledInput placeholder="First Name" />
-                          </Form.Item>
-                        </Col>
-                        <Col span={11} offset={2}>
-                          <Form.Item
-                            name="surname"
-                            label="Last Name"
-                            rules={[
-                              {
-                                required: true,
-                                message: 'Last name is required!',
-                              },
-                            ]}
-                          >
-                            <StyledInput placeholder="Last Name" />
-                          </Form.Item>
-                        </Col>
-                        <Col span={24}>
-                          <Form.Item
-                            name="email"
-                            label="Email"
-                            rules={[
-                              { required: true, message: 'Email is required!' },
-                            ]}
-                          >
-                            <StyledInput placeholder="Email" />
-                          </Form.Item>
-                        </Col>
-                        <Col span={24}>
-                          <Form.Item
-                            name="password"
-                            label="Password"
-                            rules={[
-                              {
-                                required: true,
-                                message: 'Password is required!',
-                              },
-                            ]}
-                          >
-                            <StyledInput
-                              type="password"
-                              placeholder="Password"
-                            />
-                          </Form.Item>
-                        </Col>
-                      </Row>
-                    </Form>
-                  </Spin>
-                </Col>
-                <Col span={24}>
-                  <Row justify="end" gutter={[20, 0]}>
-                    <Col>
-                      <StyledButton
-                        size="large"
-                        type="primary"
-                        onClick={() => form.submit()}
-                      >
-                        Register
-                      </StyledButton>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
+              <GenericForm
+                form={form}
+                onFinish={onFinish}
+                loading={loading}
+                formConfigurations={RegisterFormConfiguration}
+              >
+                <StyledButton size="large" type="primary" htmlType="submit">
+                  Register
+                </StyledButton>
+              </GenericForm>
             </Card>
           </Col>
         </Row>
