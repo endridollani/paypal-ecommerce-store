@@ -17,6 +17,7 @@ import { StyledButton } from '../../components/styledComponents';
 import GenericHeader from '../../components/UI/GenericHeader';
 import { onLogout } from '../../redux/authUser/actions';
 import { UserData } from '../../types/User';
+import { IS_LOGGEDIN } from '../../utils/constants';
 import { clearLocalStorage } from '../../utils/utilFunctions';
 
 export default function AppHeader() {
@@ -40,7 +41,7 @@ export default function AppHeader() {
   const logOut = () => {
     dispatch(onLogout());
     clearLocalStorage();
-    navigate('/guest');
+    navigate('/');
   };
 
   const openNotification = () => {
@@ -122,6 +123,37 @@ export default function AppHeader() {
               onClick={() => navigate('/login')}
             >
               Login
+            </StyledButton>
+          </Col>
+        </Row>
+      </GenericHeader>
+    );
+  }
+
+  if (pathname === '/' && !localStorage.getItem(IS_LOGGEDIN)) {
+    return (
+      <GenericHeader>
+        <Row gutter={[40, 0]}>
+          <Col>
+            <StyledButton
+              type="link"
+              className="style-underline"
+              ghost
+              size="large"
+              onClick={() => navigate('/login')}
+            >
+              Login
+            </StyledButton>
+          </Col>
+          <Col>
+            <StyledButton
+              type="link"
+              className="style-underline"
+              ghost
+              size="large"
+              onClick={() => navigate('/register')}
+            >
+              Register
             </StyledButton>
           </Col>
         </Row>

@@ -17,32 +17,6 @@ export default function Guest() {
   const navigate = useNavigate();
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <GenericHeader>
-        <Row gutter={[40, 0]}>
-          <Col>
-            <StyledButton
-              className="btn-light style-underline"
-              type="link"
-              ghost
-              size="large"
-              onClick={() => navigate('/login')}
-            >
-              Login
-            </StyledButton>
-          </Col>
-          <Col>
-            <StyledButton
-              type="link"
-              className="style-underline"
-              ghost
-              size="large"
-              onClick={() => navigate('/register')}
-            >
-              Register
-            </StyledButton>
-          </Col>
-        </Row>
-      </GenericHeader>
       <GenericContent>
         <Row justify="start" align="middle">
           <Col span={12}>

@@ -113,7 +113,7 @@ export default function EditUser({ close }: EditUserProps) {
   );
 
   return (
-    <GenericModal open title="Edit User" close={close}>
+    <GenericModal open title="Edit Account Information" close={close}>
       <GenericForm
         formConfigurations={UserFormConfiguration}
         form={form}

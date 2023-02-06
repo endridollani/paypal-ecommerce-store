@@ -42,14 +42,11 @@ export default function App() {
     navigate('/user');
   }
 
-  if (!isUserLoggedIn) {
-    navigate('/guest');
-  }
-
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Routes>
-        <Route path="guest" element={<Guest />} />
+        <Route path="/" element={<Guest />} />
+        <Route path="/*" element={<Guest />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </Layout>
