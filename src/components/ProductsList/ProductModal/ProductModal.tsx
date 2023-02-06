@@ -1,9 +1,10 @@
 import { Col, Row } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import React, { useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { createProduct, updateProduct } from '../../../api/productService';
+import { fetchProducts } from '../../../redux/products/action';
 import { InputTypes } from '../../../types/FormTypes';
 import { ProductModelType } from '../../../types/Product';
 import GenericForm from '../../GenericForm/GenericForm';
@@ -11,19 +12,14 @@ import GenericModal from '../../GenericModal/GenericModal';
 import { FormItemStyled, StyledButton } from '../../styledComponents';
 
 type ProductModalProps = {
-  open: boolean;
   close: () => void;
   product?: ProductModelType | undefined;
 };
 
-export default function ProductModal({
-  open,
-  close,
-  product,
-}: ProductModalProps) {
+export default function ProductModal({ close, product }: ProductModalProps) {
   const [form] = useForm();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch();
 
   const ProductFormConfiguration: any[][] = useMemo(
     () => [
@@ -156,7 +152,12 @@ export default function ProductModal({
         .then((response) => {
           if (response.status === 200) {
             toast.success('Product updated successfully!');
-            setSearchParams('edit-product=true');
+            dispatch(
+              fetchProducts({
+                search_query: payload.name,
+                is_stock: payload.stock > 0,
+              })
+            );
           }
         })
         .catch(() => {
@@ -169,7 +170,12 @@ export default function ProductModal({
       .then((response) => {
         if (response.status === 201) {
           toast.success('Product created successfully!');
-          setSearchParams('add-product=true');
+          dispatch(
+            fetchProducts({
+              search_query: payload.name,
+              is_stock: payload.stock > 0,
+            })
+          );
         }
       })
       .catch(() => {
@@ -184,7 +190,7 @@ export default function ProductModal({
   return (
     <GenericModal
       title={`${product ? 'Edit' : 'Add'} Product`}
-      open={open}
+      open
       close={close}
     >
       <GenericForm

@@ -1,68 +1,30 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Card, Image, List, Popconfirm, Row, Skeleton, Space } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { deleteProduct, getAllProducts } from '../../../api/productService';
+import { deleteProduct } from '../../../api/productService';
+import { useProductData } from '../../../hooks/useProductData';
 import { ProductModelType } from '../../../types/Product';
 import CardItem from '../../Card/CardItem';
 import { StyledButton } from '../../styledComponents';
 import ProductModal from '../ProductModal';
 
 export default function ProductCards() {
+  const { products, loading, totalItems, totalPages, currentPages, fetch } =
+    useProductData();
   const [open, isOpen] = useState<boolean>(false);
-  const [loading, isLoading] = useState<boolean>(false);
   const [product, setProduct] = useState<ProductModelType>();
-  const [products, setProducts] = useState<ProductModelType[]>([]);
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const toggleModal = () => isOpen((open) => !open);
-  const fetchProducts = async () => {
-    isLoading(true);
-    getAllProducts()
-      .then((response) => {
-        if (response.status === 200) {
-          setProducts(response.data.items);
-        }
-      })
-      .catch(() => {
-        toast.error('Something went wrong!');
-      })
-      .finally(() => {
-        isLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  useEffect(() => {
-    if (searchParams.get('add-product')) {
-      fetchProducts();
-      searchParams.delete('add-product');
-      setSearchParams(searchParams);
-    }
-
-    if (searchParams.get('edit-product')) {
-      fetchProducts();
-      searchParams.delete('edit-product');
-      setSearchParams(searchParams);
-    }
-  }, [searchParams]);
 
   const removeProduct = async (id: number) => {
-    isLoading(true);
     deleteProduct(id)
       .then(() => {
         toast.success('Product deleted successfully!');
+        fetch();
       })
       .catch(() => {
         toast.error('Failed to delete product');
-      })
-      .finally(() => {
-        isLoading(false);
-        fetchProducts();
       });
   };
 
@@ -74,14 +36,14 @@ export default function ProductCards() {
         size="small"
         loading={loading}
         pagination={{
-          defaultCurrent: 1,
-          total: products.length,
-          pageSize: 3,
+          defaultCurrent: currentPages,
+          total: totalItems,
+          pageSize: totalPages,
           responsive: true,
           simple: true,
           position: 'top',
         }}
-        dataSource={products}
+        dataSource={products as ProductModelType[]}
         renderItem={(p) => (
           <Card
             title={p.product_name}
@@ -146,7 +108,6 @@ export default function ProductCards() {
       />
       {open && product && (
         <ProductModal
-          open={open}
           close={() => {
             toggleModal();
           }}

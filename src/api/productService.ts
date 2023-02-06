@@ -1,7 +1,11 @@
 import { ProductCreateType, ProductUpdateType } from '../types/Product';
+import { QueryParams } from '../types/QueryParams';
 import agent from './agent';
 
-export const getAllProducts = () => agent.get('/products/category/test');
+export const getAllProducts = (queryParams: QueryParams) =>
+  agent.get(
+    `/products/?page=1&size=3&search_query=${queryParams.search_query}&sort_by=product_id&order=ASC&is_stock=${queryParams.is_stock}`
+  );
 
 export const createProduct = (values: ProductCreateType) =>
   agent.post('/products/create', values);

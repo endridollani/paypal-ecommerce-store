@@ -25,7 +25,7 @@ const SelectComponent: React.FC = () => {
       options={CategoryOptions}
       onClick={() => toogleSelect()}
       size="large"
-      style={{ width: '10rem' }}
+      style={{ width: '20rem' }}
       allowClear
       bordered
     />
