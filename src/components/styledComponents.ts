@@ -192,3 +192,8 @@ export const StyledTextArea = styled(TextArea)`
   border-radius: 8px;
   height: 44px;
 `;
+
+export const StyledContainer = styled.div`
+  padding: 30px;
+  background-color: rgba(102, 102, 102, 0.75);
+`;

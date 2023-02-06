@@ -1,23 +1,29 @@
 import { EditOutlined } from '@ant-design/icons';
-import { Col, Row, Space, Tag, Typography } from 'antd';
+import { Col, Empty, Row, Space, Tag, Typography } from 'antd';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import CardItem from '../../../components/Card/CardItem';
 import { StyledButton } from '../../../components/styledComponents';
+import { isAdmin } from '../../../utils/utilFunctions';
 import EditUser from './EditUser';
 
 export default function AccountSettings() {
   const [open, isOpen] = useState<boolean>(false);
   const authUserState = useSelector((state: any) => state.authUser);
+  const isAdminUser = isAdmin(authUserState);
 
   const toogleModal = () => isOpen((open) => !open);
+
+  if (!authUserState.data) return <Empty />;
 
   return (
     <Row justify="space-between" gutter={[20, 20]}>
       <Col>
         <Space align="baseline">
           <Typography.Title level={4}>Account Settings</Typography.Title>
-          <Tag color="blue">{authUserState?.data.user_type}</Tag>
+          {isAdminUser && (
+            <Tag color="blue">{authUserState?.data.user_type}</Tag>
+          )}
         </Space>
       </Col>
       <Col>

@@ -1,7 +1,7 @@
 import { Row, Typography } from 'antd';
 import React, { ReactNode } from 'react';
-import AppHeader from '../../../layout/AppHeader';
-import { StyledGuestContent } from '../../styledComponents';
+import { StyledGuestContent } from '../../components/styledComponents';
+import AppHeader from '../AppHeader';
 
 type GenericContentProps = {
   children: ReactNode;
