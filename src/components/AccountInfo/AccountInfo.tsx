@@ -5,12 +5,12 @@ import { UserData } from '../../types/User';
 import CardItem from '../Card/CardItem';
 import GenericModal from '../GenericModal';
 
-type AdminInfo = {
+type AccountInfo = {
   open: boolean;
   close: () => void;
 };
 
-export default function AccountInfo({ open, close }: AdminInfo) {
+export default function AccountInfo({ open, close }: AccountInfo) {
   const authUserState: UserData | undefined = useSelector(
     (state: any) => state.authUser
   );

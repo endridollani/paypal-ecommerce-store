@@ -12,9 +12,9 @@ import {
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import AccountInfo from '../../components/AccountInfo';
 import { StyledButton } from '../../components/styledComponents';
 import GenericHeader from '../../components/UI/GenericHeader';
-import AdminInfo from '../../pages/Admin/AdminInfo';
 import { onLogout } from '../../redux/authUser/actions';
 import { UserData } from '../../types/User';
 import { clearLocalStorage } from '../../utils/utilFunctions';
@@ -146,7 +146,7 @@ export default function AppHeader() {
       />
 
       {isVisible && (
-        <AdminInfo close={() => onToogleModal()} open={isVisible} />
+        <AccountInfo close={() => onToogleModal()} open={isVisible} />
       )}
     </GenericHeader>
   );

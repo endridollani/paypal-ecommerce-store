@@ -1,4 +1,4 @@
-export type InputType = 'input' | 'textarea' | 'datepicker';
+export type InputType = 'input' | 'textarea';
 
 export interface RulesType {
   required: boolean;
@@ -25,5 +25,4 @@ export interface FormConfigurationType {
 export enum InputTypes {
   INPUT = 'input',
   TEXTAREA = 'textarea',
-  DATEPICKER = 'datepicker',
 }

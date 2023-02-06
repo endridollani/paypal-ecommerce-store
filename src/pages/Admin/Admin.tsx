@@ -1,10 +1,10 @@
 import { Col, Row, Tabs } from 'antd';
 import TabPane from 'antd/lib/tabs/TabPane';
 import React from 'react';
+import AccountSettings from '../../components/AccountSettings';
 import ProductList from '../../components/ProductsList/ProductsList';
 import UsersList from '../../components/UsersList';
 import AppContent from '../../layout/AppContent';
-import AccountSettings from './AccountSettings';
 
 export default function Admin() {
   return (

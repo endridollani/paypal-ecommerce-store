@@ -2,9 +2,9 @@ import { EditOutlined } from '@ant-design/icons';
 import { Col, Empty, Row, Space, Tag, Typography } from 'antd';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import CardItem from '../../../components/Card/CardItem';
-import { StyledButton } from '../../../components/styledComponents';
-import { isAdmin } from '../../../utils/utilFunctions';
+import { isAdmin } from '../../utils/utilFunctions';
+import CardItem from '../Card/CardItem';
+import { StyledButton } from '../styledComponents';
 import EditUser from './EditUser';
 
 export default function AccountSettings() {
@@ -17,7 +17,7 @@ export default function AccountSettings() {
   if (!authUserState.data) return <Empty />;
 
   return (
-    <Row gutter={[0, 20]}>
+    <Row justify="start" gutter={[0, 20]}>
       <Col span={24}>
         <Row justify="end">
           <Col>
