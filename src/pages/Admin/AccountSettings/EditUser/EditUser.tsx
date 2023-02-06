@@ -10,7 +10,6 @@ import { StyledButton } from '../../../../components/styledComponents';
 import { getAuthUser } from '../../../../redux/authUser/actions';
 import { InputTypes } from '../../../../types/FormTypes';
 import { UserUpdate } from '../../../../types/User';
-// import { convertToUtc } from '../../../../utils/utilFunctions';
 
 type EditUserProps = {
   close: () => void;

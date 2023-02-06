@@ -9,7 +9,6 @@ import Card from '../../components/Card';
 import { isAdmin, isUser } from '../../utils/utilFunctions';
 import { onLogin } from '../../redux/authUser/actions';
 import { IS_LOGGEDIN } from '../../utils/constants';
-import GenericHeader from '../../components/UI/GenericHeader';
 import LoginPageIcon from '../../icons/LoginPageIcon';
 import GenericContent from '../../components/UI/GenericContent/GenericContent';
 
@@ -55,21 +54,6 @@ export default function LogIn() {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <GenericHeader>
-        <Row gutter={[40, 0]}>
-          <Col>
-            <StyledButton
-              type="link"
-              className="style-underline"
-              ghost
-              size="large"
-              onClick={() => navigate('/register')}
-            >
-              Register
-            </StyledButton>
-          </Col>
-        </Row>
-      </GenericHeader>
       <GenericContent>
         <Row justify="start" align="middle">
           <Col span={11}>

@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { StyledButton } from '../../components/styledComponents';
 import Card from '../../components/Card';
-import GenericHeader from '../../components/UI/GenericHeader';
 import GenericContent from '../../components/UI/GenericContent/GenericContent';
 import RegisterPageIcon from '../../icons/RegisterPageIcon';
 import { InputTypes } from '../../types/FormTypes';
@@ -89,7 +88,7 @@ export default function Register() {
       .then((response) => {
         if (response.status === 201) {
           toast.success('Registered successfully!');
-          navigate('/');
+          navigate('/users');
         }
       })
       .catch(() => {
@@ -102,21 +101,6 @@ export default function Register() {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <GenericHeader>
-        <Row gutter={[40, 0]}>
-          <Col>
-            <StyledButton
-              type="link"
-              className="style-underline"
-              ghost
-              size="large"
-              onClick={() => navigate('/login')}
-            >
-              Login
-            </StyledButton>
-          </Col>
-        </Row>
-      </GenericHeader>
       <GenericContent>
         <Row justify="start" align="middle">
           <Col span={11}>

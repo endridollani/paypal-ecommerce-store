@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getAllUsers } from '../../../api/userService';
+import EditUser from '../../../pages/Admin/AccountSettings/EditUser';
 import { UserModelType } from '../../../types/User';
 import CardItem from '../../Card/CardItem';
 import { StyledButton } from '../../styledComponents';
@@ -15,9 +16,6 @@ export default function UserCards() {
   const [user, setUser] = useState<UserModelType>();
   const [users, setUsers] = useState<UserModelType[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const toggleModal = () => isOpen((open) => !open);
-
   const fetchUsers = async () => {
     isLoading(true);
     getAllUsers()
@@ -62,26 +60,17 @@ export default function UserCards() {
               </Tag>
             }
             style={{ margin: '10px', borderRadius: '8px' }}
-            extra={
-              <Space align="baseline" size="large">
-                <StyledButton
-                  type="link"
-                  icon={<EditOutlined />}
-                  size="small"
-                  className="style-underline"
-                  onClick={() => {
-                    toggleModal();
-                    setUser(user);
-                  }}
-                />
-              </Space>
-            }
           >
             <Card.Meta
               description={
                 <Row justify="space-between" gutter={[0, 10]}>
                   <CardItem label="Name:" value={user?.user_name} />
                   <CardItem label="Surname:" value={user?.user_surname} />
+                  <CardItem
+                    label="Gender:"
+                    value={user?.user_gender}
+                    span={22}
+                  />
                   <CardItem label="Email:" value={user?.user_email} span={22} />
                 </Row>
               }
@@ -89,7 +78,6 @@ export default function UserCards() {
           </Card>
         )}
       />
-      {open && user && console.log('Hello')}
     </>
   );
 }

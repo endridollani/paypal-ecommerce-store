@@ -16,7 +16,7 @@ export default function ProductList() {
     <Row justify="space-around" style={{ width: '100%' }} gutter={[0, 40]}>
       <Col span={24}>
         <Col>
-          <Row justify="end">
+          <Row justify="end" gutter={[0, 30]}>
             <Col>
               <StyledButton
                 type="primary"
@@ -27,16 +27,16 @@ export default function ProductList() {
                 Add Product
               </StyledButton>
             </Col>
+            <Col span={24}>
+              <StyledInput
+                type="search"
+                placeholder="Search keyword"
+                onChange={(values) => console.log(values)}
+                prefix={<SearchOutlined />}
+                suffix={<SelectComponent />}
+              />
+            </Col>
           </Row>
-        </Col>
-        <Col span={8}>
-          <StyledInput
-            type="search"
-            placeholder="Search keyword"
-            onChange={(values) => console.log(values)}
-            prefix={<SearchOutlined />}
-            suffix={<SelectComponent />}
-          />
         </Col>
       </Col>
       <Col span={24}>

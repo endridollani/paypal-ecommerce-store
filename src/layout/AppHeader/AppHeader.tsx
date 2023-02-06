@@ -1,8 +1,17 @@
 /* eslint-disable indent */
-import { Avatar, Button, Dropdown, MenuProps, notification, Space } from 'antd';
+import {
+  Avatar,
+  Button,
+  Col,
+  Dropdown,
+  MenuProps,
+  notification,
+  Row,
+  Space,
+} from 'antd';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { StyledButton } from '../../components/styledComponents';
 import GenericHeader from '../../components/UI/GenericHeader';
 import AdminInfo from '../../pages/Admin/AdminInfo';
@@ -18,6 +27,7 @@ export default function AppHeader() {
   const navigate = useNavigate();
   const [api, contextHolder] = notification.useNotification();
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
 
   const onToogleModal = () => setIsVisible((isVisible) => !isVisible);
 
@@ -79,6 +89,45 @@ export default function AppHeader() {
       ),
     },
   ];
+  if (pathname === '/login') {
+    return (
+      <GenericHeader>
+        <Row gutter={[40, 0]}>
+          <Col>
+            <StyledButton
+              type="link"
+              className="style-underline"
+              ghost
+              size="large"
+              onClick={() => navigate('/register')}
+            >
+              Register
+            </StyledButton>
+          </Col>
+        </Row>
+      </GenericHeader>
+    );
+  }
+
+  if (pathname === '/register') {
+    return (
+      <GenericHeader>
+        <Row gutter={[40, 0]}>
+          <Col>
+            <StyledButton
+              type="link"
+              className="style-underline"
+              ghost
+              size="large"
+              onClick={() => navigate('/login')}
+            >
+              Login
+            </StyledButton>
+          </Col>
+        </Row>
+      </GenericHeader>
+    );
+  }
 
   return (
     <GenericHeader>

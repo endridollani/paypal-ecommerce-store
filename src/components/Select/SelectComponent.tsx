@@ -18,13 +18,16 @@ const SelectComponent: React.FC = () => {
 
   return (
     <Select
-      style={{ width: 120 }}
       placeholder="Select category"
       open={open}
       onChange={handleProvinceChange}
+      defaultValue={CategoryOptions[0].value}
       options={CategoryOptions}
       onClick={() => toogleSelect()}
+      size="large"
+      style={{ width: '10rem' }}
       allowClear
+      bordered
     />
   );
 };

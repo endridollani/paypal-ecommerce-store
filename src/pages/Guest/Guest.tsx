@@ -11,6 +11,7 @@ import {
 import GenericContent from '../../components/UI/GenericContent/GenericContent';
 import GenericHeader from '../../components/UI/GenericHeader';
 import EnthusiasticIcon from '../../icons/EnthusiasticIcon';
+import { IS_LOGGEDIN } from '../../utils/constants';
 
 export default function Guest() {
   const navigate = useNavigate();

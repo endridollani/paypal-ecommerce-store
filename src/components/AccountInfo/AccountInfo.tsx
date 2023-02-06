@@ -1,16 +1,16 @@
 import { Row } from 'antd';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import CardItem from '../../../components/Card/CardItem';
-import GenericModal from '../../../components/GenericModal/GenericModal';
-import { UserData } from '../../../types/User';
+import { UserData } from '../../types/User';
+import CardItem from '../Card/CardItem';
+import GenericModal from '../GenericModal';
 
 type AdminInfo = {
   open: boolean;
   close: () => void;
 };
 
-export default function AdminInfo({ open, close }: AdminInfo) {
+export default function AccountInfo({ open, close }: AdminInfo) {
   const authUserState: UserData | undefined = useSelector(
     (state: any) => state.authUser
   );
