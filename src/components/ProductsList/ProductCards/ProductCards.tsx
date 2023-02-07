@@ -1,27 +1,29 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Card, Image, List, Popconfirm, Row, Skeleton, Space } from 'antd';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { deleteProduct } from '../../../api/productService';
 import { useProductData } from '../../../hooks/useProductData';
+import { fetchProducts } from '../../../redux/products/action';
 import { ProductModelType } from '../../../types/Product';
 import CardItem from '../../Card/CardItem';
 import { StyledButton } from '../../styledComponents';
 import ProductModal from '../ProductModal';
 
 export default function ProductCards() {
-  const { products, loading, totalItems, totalPages, currentPages, fetch } =
-    useProductData();
+  const { products, loading, totalItems, currentPages } = useProductData();
   const [open, isOpen] = useState<boolean>(false);
   const [product, setProduct] = useState<ProductModelType>();
+  const dispatch = useDispatch();
 
   const toggleModal = () => isOpen((open) => !open);
 
-  const removeProduct = async (id: number) => {
+  const removeProduct = async (id: number, category: string) => {
     deleteProduct(id)
       .then(() => {
         toast.success('Product deleted successfully!');
-        fetch();
+        dispatch(fetchProducts({ category }));
       })
       .catch(() => {
         toast.error('Failed to delete product');
@@ -38,7 +40,7 @@ export default function ProductCards() {
         pagination={{
           defaultCurrent: currentPages,
           total: totalItems,
-          pageSize: totalPages,
+          pageSize: 3,
           responsive: true,
           simple: true,
           position: 'top',
@@ -71,7 +73,9 @@ export default function ProductCards() {
                 />
                 <Popconfirm
                   title="Are you sure you want to delete?"
-                  onConfirm={() => removeProduct(p.product_id)}
+                  onConfirm={() =>
+                    removeProduct(p.product_id, p.product_category)
+                  }
                   trigger="click"
                 >
                   <StyledButton

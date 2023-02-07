@@ -1,4 +1,5 @@
 export interface QueryParams {
-  search_query: string;
-  is_stock: boolean;
+  search_query?: string;
+  is_stock?: boolean;
+  category?: string;
 }

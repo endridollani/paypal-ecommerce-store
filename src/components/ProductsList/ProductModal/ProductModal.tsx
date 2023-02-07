@@ -154,8 +154,7 @@ export default function ProductModal({ close, product }: ProductModalProps) {
             toast.success('Product updated successfully!');
             dispatch(
               fetchProducts({
-                search_query: payload.name,
-                is_stock: payload.stock > 0,
+                category: payload.category,
               })
             );
           }
@@ -172,8 +171,7 @@ export default function ProductModal({ close, product }: ProductModalProps) {
           toast.success('Product created successfully!');
           dispatch(
             fetchProducts({
-              search_query: payload.name,
-              is_stock: payload.stock > 0,
+              category: payload.category,
             })
           );
         }

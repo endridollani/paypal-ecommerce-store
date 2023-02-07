@@ -8,7 +8,13 @@ export function useProductData() {
   const dispatch = useDispatch();
 
   const fetch = () => {
-    dispatch(fetchProducts({ search_query: 'Laptop', is_stock: true }));
+    dispatch(
+      fetchProducts({
+        search_query: 'Laptop',
+        is_stock: true,
+        category: 'Laptop',
+      })
+    );
   };
 
   useEffect(() => {

@@ -1,9 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Select, Space } from 'antd';
+import { Select } from 'antd';
 import React, { useState } from 'react';
 import { CategoryOptions } from '../../types/Category';
 
-const SelectComponent: React.FC = () => {
+type IProps = {
+  onSelect: (option: string) => void;
+};
+
+const SelectComponent: React.FC<IProps> = ({ onSelect }) => {
   const [open, isOpen] = useState<boolean>(false);
 
   const toogleSelect = () => isOpen((open) => !open);
@@ -12,21 +15,18 @@ const SelectComponent: React.FC = () => {
     console.log(value);
   };
 
-  const onSecondCityChange = (value: any) => {
-    console.log(value);
-  };
-
   return (
     <Select
       placeholder="Select category"
       open={open}
       onChange={handleProvinceChange}
-      defaultValue={CategoryOptions[0].value}
+      defaultValue={CategoryOptions[0].label}
       options={CategoryOptions}
       onClick={() => toogleSelect()}
       size="large"
       style={{ width: '20rem' }}
       allowClear
+      onSelect={onSelect}
       bordered
     />
   );
