@@ -1,9 +1,9 @@
 import { Row } from 'antd';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { UserData } from '../../types/User';
-import CardItem from '../Card/CardItem';
-import GenericModal from '../GenericModal';
+import { UserData } from '../../../types/User';
+import CardItem from '../../../components/Card/CardItem';
+import GenericModal from '../../../components/GenericModal';
 
 type AccountInfo = {
   open: boolean;

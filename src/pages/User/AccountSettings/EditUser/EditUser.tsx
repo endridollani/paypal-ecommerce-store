@@ -3,13 +3,13 @@ import { useForm } from 'antd/lib/form/Form';
 import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { updateUser } from '../../../api/userService';
-import { getAuthUser } from '../../../redux/authUser/actions';
-import { InputTypes } from '../../../types/FormTypes';
-import { UserUpdate } from '../../../types/User';
-import GenericForm from '../../GenericForm';
-import GenericModal from '../../GenericModal';
-import { StyledButton } from '../../styledComponents';
+import { updateUser } from '../../../../api/userService';
+import { getAuthUser } from '../../../../redux/authUser/actions';
+import { InputTypes } from '../../../../types/FormTypes';
+import { UserUpdate } from '../../../../types/User';
+import GenericForm from '../../../../components/GenericForm';
+import GenericModal from '../../../../components/GenericModal';
+import { StyledButton } from '../../../../components/styledComponents';
 
 type EditUserProps = {
   close: () => void;

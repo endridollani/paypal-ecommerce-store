@@ -3,13 +3,16 @@ import { useForm } from 'antd/es/form/Form';
 import React, { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { createProduct, updateProduct } from '../../../api/productService';
-import { fetchProducts } from '../../../redux/products/action';
-import { InputTypes } from '../../../types/FormTypes';
-import { ProductModelType } from '../../../types/Product';
-import GenericForm from '../../GenericForm/GenericForm';
-import GenericModal from '../../GenericModal/GenericModal';
-import { FormItemStyled, StyledButton } from '../../styledComponents';
+import { createProduct, updateProduct } from '../../../../api/productService';
+import { fetchProducts } from '../../../../redux/products/action';
+import { InputTypes } from '../../../../types/FormTypes';
+import { ProductModelType } from '../../../../types/Product';
+import GenericForm from '../../../../components/GenericForm/GenericForm';
+import GenericModal from '../../../../components/GenericModal/GenericModal';
+import {
+  FormItemStyled,
+  StyledButton,
+} from '../../../../components/styledComponents';
 
 type ProductModalProps = {
   close: () => void;

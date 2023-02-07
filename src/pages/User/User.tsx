@@ -2,10 +2,10 @@ import { Col, Row, Tabs } from 'antd';
 import TabPane from 'antd/lib/tabs/TabPane';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import AccountSettings from '../../components/AccountSettings';
-import ProductList from '../../components/ProductsList/ProductsList';
+import AccountSettings from './AccountSettings';
+import ProductList from './ProductsList';
 import { StyledUserContent } from '../../components/styledComponents';
-import UserCards from '../../components/UsersGrid';
+import UserCards from './UsersGrid';
 import AppContent from '../../layout/AppContent';
 import { isAdmin } from '../../utils/utilFunctions';
 

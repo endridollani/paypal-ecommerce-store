@@ -3,13 +3,13 @@ import { Card, Image, List, Popconfirm, Row, Skeleton, Space } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { deleteProduct } from '../../../api/productService';
-import { useProductData } from '../../../hooks/useProductData';
-import { fetchProducts } from '../../../redux/products/action';
-import { ProductModelType } from '../../../types/Product';
-import { isAdmin } from '../../../utils/utilFunctions';
-import CardItem from '../../Card/CardItem';
-import { StyledButton } from '../../styledComponents';
+import { deleteProduct } from '../../../../api/productService';
+import { useProductData } from '../../../../hooks/useProductData';
+import { fetchProducts } from '../../../../redux/products/action';
+import { ProductModelType } from '../../../../types/Product';
+import { isAdmin } from '../../../../utils/utilFunctions';
+import CardItem from '../../../../components/Card/CardItem';
+import { StyledButton } from '../../../../components/styledComponents';
 import ProductModal from '../ProductModal';
 
 export default function ProductCards() {

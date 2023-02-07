@@ -2,9 +2,9 @@ import { EditOutlined } from '@ant-design/icons';
 import { Col, Empty, Row, Space, Tag, Typography } from 'antd';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { isAdmin } from '../../utils/utilFunctions';
-import CardItem from '../Card/CardItem';
-import { StyledButton } from '../styledComponents';
+import { isAdmin } from '../../../utils/utilFunctions';
+import CardItem from '../../../components/Card/CardItem';
+import { StyledButton } from '../../../components/styledComponents';
 import EditUser from './EditUser';
 
 export default function AccountSettings() {

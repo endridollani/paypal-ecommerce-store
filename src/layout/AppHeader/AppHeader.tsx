@@ -12,7 +12,7 @@ import {
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import AccountInfo from '../../components/AccountInfo';
+import AccountInfo from '../../pages/User/AccountInfo';
 import { StyledButton } from '../../components/styledComponents';
 import GenericHeader from '../../components/UI/GenericHeader';
 import { onLogout } from '../../redux/authUser/actions';

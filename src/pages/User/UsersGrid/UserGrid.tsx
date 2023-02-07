@@ -1,9 +1,9 @@
 import { Card, List, Row } from 'antd';
 import React from 'react';
-import { useUsersData } from '../../hooks/useUsersData';
-import { UserModelType } from '../../types/User';
-import CardItem from '../Card/CardItem';
-import { StyledAdminTag } from '../styledComponents';
+import { useUsersData } from '../../../hooks/useUsersData';
+import { UserModelType } from '../../../types/User';
+import CardItem from '../../../components/Card/CardItem';
+import { StyledAdminTag } from '../../../components/styledComponents';
 
 export default function UserGrid() {
   const { users, loading } = useUsersData();
