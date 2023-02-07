@@ -1,28 +1,13 @@
 import { Layout } from 'antd';
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { IS_LOGGEDIN } from '../utils/constants';
 import { getAuthUser } from '../redux/authUser/actions';
-import Admin from '../pages/Admin';
-import { isAdmin, isUser } from '../utils/utilFunctions';
 import Guest from '../pages/Guest';
-
-export enum SCREE_SIZE {
-  SMALL = 'sm',
-  MEDIUM = 'md',
-}
-
-export function getWindowSize() {
-  const { innerWidth } = window;
-  if (innerWidth < 1200) {
-    return SCREE_SIZE.SMALL;
-  }
-  return SCREE_SIZE.MEDIUM;
-}
+import User from '../pages/User';
 
 export default function App() {
-  const authUserState = useSelector((state: any) => state.authUser);
   const isUserLoggedIn = localStorage.getItem(IS_LOGGEDIN);
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -31,14 +16,11 @@ export default function App() {
   useEffect(() => {
     if (isUserLoggedIn) {
       dispatch(getAuthUser());
+      navigate('/user');
     }
   }, []);
 
-  if (pathname !== '/admin' && isAdmin(authUserState)) {
-    navigate('/admin');
-  }
-
-  if (pathname !== '/user' && isUser(authUserState)) {
+  if (isUserLoggedIn && pathname === '/') {
     navigate('/user');
   }
 
@@ -47,7 +29,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Guest />} />
         <Route path="/*" element={<Guest />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/user" element={<User />} />
       </Routes>
     </Layout>
   );

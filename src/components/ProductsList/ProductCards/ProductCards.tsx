@@ -1,17 +1,20 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Card, Image, List, Popconfirm, Row, Skeleton, Space } from 'antd';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { deleteProduct } from '../../../api/productService';
 import { useProductData } from '../../../hooks/useProductData';
 import { fetchProducts } from '../../../redux/products/action';
 import { ProductModelType } from '../../../types/Product';
+import { isAdmin } from '../../../utils/utilFunctions';
 import CardItem from '../../Card/CardItem';
 import { StyledButton } from '../../styledComponents';
 import ProductModal from '../ProductModal';
 
 export default function ProductCards() {
+  const authUserState = useSelector((state: any) => state.authUser);
+  const isAdminUser = isAdmin(authUserState);
   const { products, loading, totalItems, currentPages } = useProductData();
   const [open, isOpen] = useState<boolean>(false);
   const [product, setProduct] = useState<ProductModelType>();
@@ -60,33 +63,37 @@ export default function ProductCards() {
               </Skeleton>
             }
             extra={
-              <Space align="baseline" size="large">
-                <StyledButton
-                  type="link"
-                  icon={<EditOutlined />}
-                  size="small"
-                  className="style-underline"
-                  onClick={() => {
-                    toggleModal();
-                    setProduct(p);
-                  }}
-                />
-                <Popconfirm
-                  title="Are you sure you want to delete?"
-                  onConfirm={() =>
-                    removeProduct(p.product_id, p.product_category)
-                  }
-                  trigger="click"
-                >
-                  <StyledButton
-                    icon={<DeleteOutlined />}
-                    type="link"
-                    size="small"
-                    ghost
-                    danger
-                  />
-                </Popconfirm>
-              </Space>
+              isAdminUser ? (
+                <>
+                  <Space align="baseline" size="large">
+                    <StyledButton
+                      type="link"
+                      icon={<EditOutlined />}
+                      size="small"
+                      className="style-underline"
+                      onClick={() => {
+                        toggleModal();
+                        setProduct(p);
+                      }}
+                    />
+                    <Popconfirm
+                      title="Are you sure you want to delete?"
+                      onConfirm={() =>
+                        removeProduct(p.product_id, p.product_category)
+                      }
+                      trigger="click"
+                    >
+                      <StyledButton
+                        icon={<DeleteOutlined />}
+                        type="link"
+                        size="small"
+                        ghost
+                        danger
+                      />
+                    </Popconfirm>
+                  </Space>
+                </>
+              ) : undefined
             }
           >
             <Card.Meta

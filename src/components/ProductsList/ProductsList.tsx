@@ -6,15 +6,18 @@ import {
 } from '@ant-design/icons';
 import { Col, Drawer, Row, Space, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useDebounce } from '../../hooks/useDebounce';
 import { fetchProducts } from '../../redux/products/action';
+import { isAdmin } from '../../utils/utilFunctions';
 import SelectComponent from '../Select';
 import { StyledButton, StyledInput } from '../styledComponents';
 import ProductCards from './ProductCards';
 import ProductModal from './ProductModal';
 
 export default function ProductList() {
+  const authUserState = useSelector((state: any) => state.authUser);
+  const isAdminUser = isAdmin(authUserState);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>('');
@@ -45,16 +48,18 @@ export default function ProductList() {
                 Filters
               </StyledButton>
             </Col>
-            <Col>
-              <StyledButton
-                type="primary"
-                size="large"
-                onClick={() => onToogleModal()}
-                icon={<PlusCircleTwoTone />}
-              >
-                Add Product
-              </StyledButton>
-            </Col>
+            {isAdminUser && (
+              <Col>
+                <StyledButton
+                  type="primary"
+                  size="large"
+                  onClick={() => onToogleModal()}
+                  icon={<PlusCircleTwoTone />}
+                >
+                  Add Product
+                </StyledButton>
+              </Col>
+            )}
           </Row>
         </Col>
       </Col>

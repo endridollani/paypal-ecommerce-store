@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { StyledButton } from '../../components/styledComponents';
 import Card from '../../components/Card';
-import GenericContent from '../../components/UI/GenericContent/GenericContent';
 import RegisterPageIcon from '../../icons/RegisterPageIcon';
 import { InputTypes } from '../../types/FormTypes';
 import GenericForm from '../../components/GenericForm';
 import { RegisterType } from '../../types/Register';
 import { register } from '../../api/authService';
+import GenericContent from '../../components/UI/GenericContent/GenericContent';
 
 export default function Register() {
   const [form] = useForm();
