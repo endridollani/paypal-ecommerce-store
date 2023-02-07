@@ -1,4 +1,3 @@
-import { Layout } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
@@ -6,6 +5,7 @@ import { IS_LOGGEDIN } from '../utils/constants';
 import { getAuthUser } from '../redux/authUser/actions';
 import Guest from '../pages/Guest';
 import User from '../pages/User';
+import { StyledLayout } from '../components/styledComponents';
 
 export default function App() {
   const isUserLoggedIn = localStorage.getItem(IS_LOGGEDIN);
@@ -25,12 +25,12 @@ export default function App() {
   }
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <StyledLayout>
       <Routes>
         <Route path="/" element={<Guest />} />
         <Route path="/*" element={<Guest />} />
         <Route path="/user" element={<User />} />
       </Routes>
-    </Layout>
+    </StyledLayout>
   );
 }

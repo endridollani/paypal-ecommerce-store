@@ -4,7 +4,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import AccountSettings from '../../components/AccountSettings';
 import ProductList from '../../components/ProductsList/ProductsList';
-import UsersList from '../../components/UsersList';
+import { StyledUserContent } from '../../components/styledComponents';
+import UserCards from '../../components/UsersList/UserCards';
 import AppContent from '../../layout/AppContent';
 import { isAdmin } from '../../utils/utilFunctions';
 
@@ -12,16 +13,22 @@ export default function User() {
   const authUserState = useSelector((state: any) => state.authUser);
   const isAdminUser = isAdmin(authUserState);
 
+  const adminTab = (
+    <TabPane key="0" tab="Users">
+      <Row justify="space-around" className="full-width" gutter={[0, 30]}>
+        <Col span={24}>
+          <UserCards />
+        </Col>
+      </Row>
+    </TabPane>
+  );
+
   return (
     <AppContent>
-      <Row justify="space-between" style={{ width: '100%' }}>
+      <StyledUserContent>
         <Col span={24}>
           <Tabs tabPosition="left">
-            {isAdminUser && (
-              <TabPane key="0" tab="Users">
-                <UsersList />
-              </TabPane>
-            )}
+            {isAdminUser && adminTab}
             <TabPane key="1" tab="Products">
               <ProductList />
             </TabPane>
@@ -30,7 +37,7 @@ export default function User() {
             </TabPane>
           </Tabs>
         </Col>
-      </Row>
+      </StyledUserContent>
     </AppContent>
   );
 }

@@ -1,4 +1,6 @@
-import { Button, Form, Input, Modal, Row } from 'antd';
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable prettier/prettier */
+import { Button, Form, Input, Layout, Modal, Row, Tag } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { Content, Header } from 'antd/lib/layout/layout';
 import styled from 'styled-components';
@@ -142,29 +144,6 @@ export const StyledGuestContent = styled(Content)`
     justify-content: center;
     align-items: center;
   }
-
-  [class*='ant-tabs-nav'] {
-    padding-top: 20px;
-    .ant-tabs-nav-list {
-      padding: 20px;
-      gap: 30px;
-    }
-    .ant-tabs-tab {
-      padding: 20px;
-      border: 1px solid #d9d9d9;
-      border-radius: 5px;
-      justify-content: center;
-    }
-
-    .ant-tabs-tab-active {
-      padding: 20px;
-      background-color: #0050b3;
-      border-radius: 5px;
-      .ant-tabs-tab-btn {
-        color: white;
-      }
-    }
-  }
 `;
 
 export const CustomModal = styled(Modal)`
@@ -196,4 +175,50 @@ export const StyledTextArea = styled(TextArea)`
 export const StyledContainer = styled.div`
   padding: 30px;
   background-color: rgba(102, 102, 102, 0.75);
+`;
+export const StyledLayout = styled(Layout)`
+  min-height: 100vh;
+`;
+
+export const StyledUserContent = styled(Row)`
+  width: 100%;
+
+  & .full-width {
+    width: 100%;
+  }
+
+  & .list-card {
+    margin: 10px;
+    border-radius: 8px;
+  }
+
+  [class*='ant-tabs-nav'] {
+    padding-top: 20px;
+    .ant-tabs-nav-list {
+      padding: 20px;
+      gap: 30px;
+    }
+    .ant-tabs-tab {
+      padding: 20px;
+      border: 1px solid #d9d9d9;
+      border-radius: 5px;
+      justify-content: center;
+    }
+
+    .ant-tabs-tab-active {
+      padding: 20px;
+      background-color: #0050b3;
+      border-radius: 5px;
+      .ant-tabs-tab-btn {
+        color: white;
+      }
+    }
+  }
+`;
+
+export const StyledAdminTag = styled(Tag)<{ type: boolean }>`
+  padding: 5px 10px;
+  border-radius: 5px;
+  ${({ type }) =>
+    type ? 'background-color: #adc6ff' : 'background-color: #95de64'}
 `;
