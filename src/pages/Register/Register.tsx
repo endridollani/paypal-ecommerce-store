@@ -1,16 +1,16 @@
-import { Col, Layout, Row } from 'antd';
+import { Col, Row } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { StyledButton } from '../../components/styledComponents';
+import { StyledButton, StyledLayout } from '../../components/styledComponents';
 import Card from '../../components/Card';
 import RegisterPageIcon from '../../icons/RegisterPageIcon';
 import { InputTypes } from '../../types/FormTypes';
 import GenericForm from '../../components/GenericForm';
 import { RegisterType } from '../../types/Register';
 import { register } from '../../api/authService';
-import GenericContent from '../../components/UI/GenericContent/GenericContent';
+import AppContent from '../../layout/AppContent';
 
 export default function Register() {
   const [form] = useForm();
@@ -100,8 +100,8 @@ export default function Register() {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <GenericContent>
+    <StyledLayout>
+      <AppContent>
         <Row justify="start" align="middle">
           <Col span={11}>
             <RegisterPageIcon />
@@ -121,7 +121,7 @@ export default function Register() {
             </Card>
           </Col>
         </Row>
-      </GenericContent>
-    </Layout>
+      </AppContent>
+    </StyledLayout>
   );
 }

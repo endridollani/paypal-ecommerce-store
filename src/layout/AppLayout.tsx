@@ -17,6 +17,8 @@ export default function App() {
     if (isUserLoggedIn) {
       dispatch(getAuthUser());
       navigate('/user');
+    } else {
+      navigate('/');
     }
   }, []);
 
@@ -27,9 +29,9 @@ export default function App() {
   return (
     <StyledLayout>
       <Routes>
+        <Route path="/user" element={<User />} />
         <Route path="/" element={<Guest />} />
         <Route path="/*" element={<Guest />} />
-        <Route path="/user" element={<User />} />
       </Routes>
     </StyledLayout>
   );

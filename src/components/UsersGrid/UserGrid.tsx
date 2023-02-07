@@ -1,34 +1,12 @@
 import { Card, List, Row } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { getAllUsers } from '../../../api/userService';
-import { UserModelType } from '../../../types/User';
-import CardItem from '../../Card/CardItem';
-import { StyledAdminTag } from '../../styledComponents';
+import React from 'react';
+import { useUsersData } from '../../hooks/useUsersData';
+import { UserModelType } from '../../types/User';
+import CardItem from '../Card/CardItem';
+import { StyledAdminTag } from '../styledComponents';
 
-export default function UserCards() {
-  const [loading, isLoading] = useState<boolean>(false);
-  const [users, setUsers] = useState<UserModelType[]>([]);
-
-  const fetchUsers = async () => {
-    isLoading(true);
-    getAllUsers()
-      .then((response) => {
-        if (response.status === 200) {
-          setUsers(response.data.items);
-        }
-      })
-      .catch(() => {
-        toast.error('Failed to get all users!');
-      })
-      .finally(() => {
-        isLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+export default function UserGrid() {
+  const { users, loading } = useUsersData();
 
   return (
     <List
@@ -44,7 +22,7 @@ export default function UserCards() {
         simple: true,
         position: 'top',
       }}
-      dataSource={users}
+      dataSource={users as Array<UserModelType>}
       renderItem={(user) => (
         <Card
           title={

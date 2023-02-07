@@ -1,16 +1,20 @@
-import { Col, Form, Layout, Row, Spin } from 'antd';
+import { Col, Form, Row, Spin } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { StyledButton, StyledInput } from '../../components/styledComponents';
+import {
+  StyledButton,
+  StyledInput,
+  StyledLayout,
+} from '../../components/styledComponents';
 import Card from '../../components/Card';
 import { isAdmin, isUser } from '../../utils/utilFunctions';
 import { onLogin } from '../../redux/authUser/actions';
 import { IS_LOGGEDIN } from '../../utils/constants';
 import LoginPageIcon from '../../icons/LoginPageIcon';
-import GenericContent from '../../components/UI/GenericContent/GenericContent';
+import AppContent from '../../layout/AppContent';
 
 export interface LoginUserData {
   email: string;
@@ -53,8 +57,8 @@ export default function LogIn() {
   }, [authUserState]);
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <GenericContent>
+    <StyledLayout style={{ minHeight: '100vh' }}>
+      <AppContent>
         <Row justify="start" align="middle">
           <Col span={11}>
             <LoginPageIcon />
@@ -108,7 +112,7 @@ export default function LogIn() {
             </Card>
           </Col>
         </Row>
-      </GenericContent>
-    </Layout>
+      </AppContent>
+    </StyledLayout>
   );
 }

@@ -1,13 +1,13 @@
 import { Col, Row, Typography } from 'antd';
 import React from 'react';
 import { StyledLayout } from '../../components/styledComponents';
-import GenericContent from '../../components/UI/GenericContent/GenericContent';
 import EnthusiasticIcon from '../../icons/EnthusiasticIcon';
+import AppContent from '../../layout/AppContent';
 
 export default function Guest() {
   return (
     <StyledLayout>
-      <GenericContent>
+      <AppContent>
         <Row justify="start" align="middle">
           <Col span={12}>
             <Typography.Title level={1} className="hero-section-text">
@@ -21,7 +21,7 @@ export default function Guest() {
             </div>
           </Col>
         </Row>
-      </GenericContent>
+      </AppContent>
     </StyledLayout>
   );
 }

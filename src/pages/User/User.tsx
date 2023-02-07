@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import AccountSettings from '../../components/AccountSettings';
 import ProductList from '../../components/ProductsList/ProductsList';
 import { StyledUserContent } from '../../components/styledComponents';
-import UserCards from '../../components/UsersList/UserCards';
+import UserCards from '../../components/UsersGrid';
 import AppContent from '../../layout/AppContent';
 import { isAdmin } from '../../utils/utilFunctions';
 
