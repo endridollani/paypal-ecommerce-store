@@ -10,6 +10,8 @@ import { isAdmin } from '../../../../utils/utilFunctions';
 import CardItem from '../../../../components/Card/CardItem';
 import ProductModal from '../ProductModal';
 import ProductCardActions from '../ProductCardActions';
+import { CardType } from '../../../../types/Card';
+import { appendCard } from '../../../../redux/card/action';
 
 export default function ProductCards() {
   const authUserState = useSelector((state: any) => state.authUser);
@@ -35,6 +37,14 @@ export default function ProductCards() {
       .catch(() => {
         toast.error('Failed to delete product');
       });
+  };
+  const onCardChange = (quantity: number, product: ProductModelType) => {
+    const payload: CardType = {
+      id: product.product_id,
+      quantity,
+      product,
+    };
+    dispatch(appendCard(payload));
   };
 
   return (
@@ -73,6 +83,7 @@ export default function ProductCards() {
                 onDeleteConfirm={() =>
                   removeProduct(p.product_id, p.product_category)
                 }
+                onChange={(quantity) => onCardChange(quantity, p)}
               />
             }
           >

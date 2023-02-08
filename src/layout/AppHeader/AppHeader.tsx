@@ -16,14 +16,11 @@ import AccountInfo from '../../pages/User/AccountInfo';
 import { StyledButton } from '../../components/styledComponents';
 import GenericHeader from '../../components/UI/GenericHeader';
 import { onLogout } from '../../redux/authUser/actions';
-import { UserData } from '../../types/User';
 import { IS_LOGGEDIN } from '../../utils/constants';
 import { clearLocalStorage } from '../../utils/utilFunctions';
 
 export default function AppHeader() {
-  const authUserState: UserData | undefined = useSelector(
-    (state: any) => state.authUser
-  );
+  const authUserState = useSelector((state: any) => state.authUser);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const navigate = useNavigate();
   const [api, contextHolder] = notification.useNotification();
@@ -176,7 +173,6 @@ export default function AppHeader() {
         }
         menu={{ items }}
       />
-
       {isVisible && (
         <AccountInfo close={() => onToogleModal()} open={isVisible} />
       )}

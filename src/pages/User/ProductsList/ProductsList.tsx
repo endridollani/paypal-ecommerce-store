@@ -2,8 +2,9 @@ import {
   FilterOutlined,
   PlusCircleTwoTone,
   SearchOutlined,
+  ShoppingCartOutlined,
 } from '@ant-design/icons';
-import { Col, Drawer, Row, Space, Typography } from 'antd';
+import { Avatar, Badge, Col, Drawer, Row, Space, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDebounce } from '../../../hooks/useDebounce';
@@ -16,15 +17,35 @@ import {
 } from '../../../components/styledComponents';
 import ProductCards from './ProductCards';
 import ProductModal from './ProductModal';
+import useCards from '../../../hooks/useCards';
+import { CardType } from '../../../types/Card';
+import { resetCards } from '../../../redux/card/action';
+import ShoppingCard from './ShoppingCard';
 
 export default function ProductList() {
   const authUserState = useSelector((state: any) => state.authUser);
   const isAdminUser = isAdmin(authUserState);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
+  const [openCardDrawer, setCardDrawer] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>('');
   const searchTearm = useDebounce(searchText);
+  const { cards } = useCards();
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    let reducedCards: Array<CardType> = [];
+    if (cards.length > 0) {
+      for (let i = 0; i < cards?.length; i += 1) {
+        if (cards[i]?.id !== cards[i + 1]?.id) {
+          reducedCards = [...reducedCards, cards[i]];
+        }
+      }
+    }
+    dispatch(resetCards(reducedCards));
+    console.log(cards);
+  }, [cards.length]);
 
   useEffect(() => {
     dispatch(fetchProducts({ search_query: searchText }));
@@ -32,13 +53,24 @@ export default function ProductList() {
 
   const onToogleDrawer = () => setOpenDrawer((openDrawer) => !openDrawer);
 
+  const onToogleCardDrawer = () =>
+    setCardDrawer((openCardDrawer) => !openCardDrawer);
+
   const onToogleModal = () => setIsOpen((isOpen) => !isOpen);
 
   return (
-    <Row justify="space-around" style={{ width: '100%' }} gutter={[0, 40]}>
+    <Row
+      justify="space-around"
+      style={{ width: '100%' }}
+      gutter={[isAdminUser ? 0 : 30, 40]}
+    >
       <Col span={24}>
         <Col>
-          <Row justify="end" gutter={[20, 30]}>
+          <Row
+            justify={isAdminUser ? 'end' : 'space-between'}
+            align="middle"
+            gutter={[20, 30]}
+          >
             <Col>
               <StyledButton
                 type="primary"
@@ -50,6 +82,19 @@ export default function ProductList() {
                 Filters
               </StyledButton>
             </Col>
+            {!isAdminUser && (
+              <Col>
+                <Badge count={cards.length} showZero color="#22075e">
+                  <Avatar
+                    shape="square"
+                    className="cart-avatar"
+                    icon={<ShoppingCartOutlined />}
+                    size="large"
+                    onClick={onToogleCardDrawer}
+                  />
+                </Badge>
+              </Col>
+            )}
             {isAdminUser && (
               <Col>
                 <StyledButton
@@ -97,6 +142,13 @@ export default function ProductList() {
             </Space>
           </Col>
         </Row>
+      </Drawer>
+      <Drawer
+        title="Shooping Card"
+        open={openCardDrawer}
+        onClose={onToogleCardDrawer}
+      >
+        <ShoppingCard />
       </Drawer>
       {isOpen && (
         <ProductModal

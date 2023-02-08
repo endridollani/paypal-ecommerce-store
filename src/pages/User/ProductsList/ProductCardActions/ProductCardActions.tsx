@@ -13,23 +13,29 @@ type IProps = {
   isAdmin: boolean;
   onDeleteConfirm: () => void;
   onEdit: () => void;
+  onChange: (quantity: number) => void;
 };
 
 export default function ProductCardActions({
   isAdmin,
   onDeleteConfirm,
   onEdit,
+  onChange,
 }: IProps) {
-  const [quantity, setQuantity] = useState<number>(1);
+  const [quantity, setQuantity] = useState<number>(0);
   const [added, isAdded] = useState<boolean>(false);
 
   const onClickToogle = () => {
     isAdded((added) => !added);
   };
 
-  const incrementQuantity = () => setQuantity((quantity) => quantity + 1);
+  const incrementQuantity = () => {
+    onChange(quantity + 1);
+    setQuantity((quantity) => quantity + 1);
+  };
 
   const decrementQuantity = () => {
+    onChange(quantity - 1);
     if (quantity > 1) {
       setQuantity((quantity) => quantity - 1);
     } else {

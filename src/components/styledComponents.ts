@@ -225,6 +225,14 @@ export const StyledUserContent = styled(Row)`
     }
   }
 
+  & .cart-avatar {
+    border-radius: 5px;
+    background-color: #bae0ff;
+    color: black;
+    border: 1px solid #1d39c4;
+    cursor: pointer;
+  }
+
   [class*='ant-tabs-nav'] {
     padding-top: 20px;
     .ant-tabs-nav-list {
