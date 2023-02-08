@@ -4,7 +4,7 @@ export interface ProductModelType {
   product_description: string;
   product_discounted_price: number;
   product_name: string;
-  product_price: string;
+  product_price: number;
   product_stock: number;
   images: Array<string>;
 }
