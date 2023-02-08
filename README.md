@@ -1,7 +1,7 @@
 ## PayPal E-commerce Store
 
 
-![image](https://raw.githubusercontent.com/endridollani/paypal-ecommerce-store/main/public/guest-page.png?token=GHSAT0AAAAAAB6BLOGZKVKIJWVFWT72L2Z4Y7DHC5Q)
+![image](https://github.com/endridollani/paypal-ecommerce-store/blob/main/public/guest-page.png?raw=true)
 
 #### Build with:
 React JS
@@ -18,7 +18,7 @@ React JS
 	3. Use of debounce  hook for optimizing search input
 8. Paypal checkout
 
-#### Use:
+#### Usecase:
 This site was implemented with the intend that , logged in users would select their favorite product and would be able to buy them using paypal checkout.
 
 This is realized with the help of   [react-paypal-js ](https://www.npmjs.com/package/@paypal/react-paypal-js) npm package. 
