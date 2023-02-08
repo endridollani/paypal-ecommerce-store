@@ -26,4 +26,4 @@ This is realized with the help of   [react-paypal-js ](https://www.npmjs.com/pac
 
 #### Backend:
 
-To se the BE click this link [deniscerri/ecommerce-backend](https://github.com/deniscerri/ecommerce-backend)
+To see the BE click this link [deniscerri/ecommerce-backend](https://github.com/deniscerri/ecommerce-backend)
