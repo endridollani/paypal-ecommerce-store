@@ -192,6 +192,39 @@ export const StyledUserContent = styled(Row)`
     border-radius: 8px;
   }
 
+  & .product-card {
+    margin: 10px;
+    border-radius: 8px;
+  }
+
+  & .product-img {
+    padding: 10px;
+  }
+
+  & .add-to-card-btn {
+    border-radius: 2px;
+  }
+
+  & .card-action-wraper {
+    .ant-btn {
+      border: none;
+    }
+    .quantity {
+
+      border: 1px solid #096dd9;
+      border-left: none;
+      border-right: none;
+      background-color: #e6f7ff;
+      padding: 4px 15px;
+    }
+    .minus-icon {
+      color: #ff4d4f;
+    }
+    .plus-icon {
+      color: #389e0d;
+    }
+  }
+
   [class*='ant-tabs-nav'] {
     padding-top: 20px;
     .ant-tabs-nav-list {

@@ -1,5 +1,4 @@
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Card, Image, List, Popconfirm, Row, Skeleton, Space } from 'antd';
+import { Card, Image, List, Row, Skeleton } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -9,8 +8,8 @@ import { fetchProducts } from '../../../../redux/products/action';
 import { ProductModelType } from '../../../../types/Product';
 import { isAdmin } from '../../../../utils/utilFunctions';
 import CardItem from '../../../../components/Card/CardItem';
-import { StyledButton } from '../../../../components/styledComponents';
 import ProductModal from '../ProductModal';
+import ProductCardActions from '../ProductCardActions';
 
 export default function ProductCards() {
   const authUserState = useSelector((state: any) => state.authUser);
@@ -21,6 +20,11 @@ export default function ProductCards() {
   const dispatch = useDispatch();
 
   const toggleModal = () => isOpen((open) => !open);
+
+  const onEdit = (p: ProductModelType) => {
+    toggleModal();
+    setProduct(p);
+  };
 
   const removeProduct = async (id: number, category: string) => {
     deleteProduct(id)
@@ -36,7 +40,7 @@ export default function ProductCards() {
   return (
     <>
       <List
-        style={{ width: '100%' }}
+        className="full-width"
         grid={{ gutter: 0, column: 3 }}
         size="small"
         loading={loading}
@@ -52,48 +56,24 @@ export default function ProductCards() {
         renderItem={(p) => (
           <Card
             title={p.product_name}
-            style={{ margin: '10px', borderRadius: '8px' }}
+            className="product-card"
             cover={
               <Skeleton
                 active
                 loading={loading}
                 paragraph={{ rows: 1, width: '100%' }}
               >
-                <Image src={p.images[0]} style={{ padding: '10px' }} />
+                <Image src={p.images[0]} className="product-img" />
               </Skeleton>
             }
             extra={
-              isAdminUser ? (
-                <>
-                  <Space align="baseline" size="large">
-                    <StyledButton
-                      type="link"
-                      icon={<EditOutlined />}
-                      size="small"
-                      className="style-underline"
-                      onClick={() => {
-                        toggleModal();
-                        setProduct(p);
-                      }}
-                    />
-                    <Popconfirm
-                      title="Are you sure you want to delete?"
-                      onConfirm={() =>
-                        removeProduct(p.product_id, p.product_category)
-                      }
-                      trigger="click"
-                    >
-                      <StyledButton
-                        icon={<DeleteOutlined />}
-                        type="link"
-                        size="small"
-                        ghost
-                        danger
-                      />
-                    </Popconfirm>
-                  </Space>
-                </>
-              ) : undefined
+              <ProductCardActions
+                isAdmin={isAdminUser}
+                onEdit={() => onEdit(p)}
+                onDeleteConfirm={() =>
+                  removeProduct(p.product_id, p.product_category)
+                }
+              />
             }
           >
             <Card.Meta
@@ -104,10 +84,10 @@ export default function ProductCards() {
                     value={p?.product_description}
                     span={24}
                   />
-                  <CardItem label="Price:" value={p?.product_price} />
+                  <CardItem label="Price:" value={`${p?.product_price} $`} />
                   <CardItem
                     label="Discounted Price:"
-                    value={p?.product_discounted_price}
+                    value={`${p?.product_discounted_price} $`}
                   />
                   <CardItem label="Stock:" value={p?.product_stock} />
                   <CardItem label="Category:" value={p?.product_category} />
