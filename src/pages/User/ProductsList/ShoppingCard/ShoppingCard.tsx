@@ -18,10 +18,10 @@ export default function ShoppingCard() {
     let sum = 0;
     for (let i = 0; i < cards.length; i += 1) {
       sum +=
-        Number(cards[i].product.product_discounted_price) *
-        Number(cards[i].quantity);
+        Number(cards[i]?.product?.product_discounted_price) *
+        Number(cards[i]?.quantity);
     }
-    setTotal(() => String(sum));
+    setTotal(() => String(sum || 0));
   };
 
   useEffect(() => {
@@ -116,23 +116,25 @@ export default function ShoppingCard() {
                       {
                         amount: {
                           currency_code: 'USD',
-                          value: total,
+                          value: total || '0',
                           breakdown: {
                             item_total: {
                               currency_code: 'USD',
-                              value: total,
+                              value: total || '0',
                             },
                           },
                         },
                         items: [
                           ...cards.map((c: CardType) => ({
-                            name: c.product.product_name,
-                            description: c.product.product_description,
+                            name: c?.product?.product_name || '',
+                            description: c?.product?.product_description || '',
                             unit_amount: {
                               currency_code: 'USD',
-                              value: String(c.product.product_discounted_price),
+                              value: String(
+                                c?.product?.product_discounted_price || ''
+                              ),
                             },
-                            quantity: String(c.quantity),
+                            quantity: String(c?.quantity || 0),
                           })),
                         ],
                       },
@@ -140,12 +142,12 @@ export default function ShoppingCard() {
                     intent: 'CAPTURE',
                     application_context: {
                       shipping_preference: 'NO_SHIPPING',
-                      return_url: 'http://localhost:3000/checkout',
+                      return_url: 'http://localhost:3000/user',
                     },
                   })
                 }
                 onApprove={async (data, action) => {
-                  const order = await action.order?.capture();
+                  const order = await action?.order?.capture();
                   console.log(111, { order });
                   handleOrder(data.orderID);
                 }}

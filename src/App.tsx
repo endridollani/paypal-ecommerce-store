@@ -7,10 +7,11 @@ import Register from './pages/Register';
 import AppLayout from './layout/AppLayout';
 import 'react-toastify/dist/ReactToastify.css';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
-import { REACT_APP_PAYPAL_CLIENT_ID } from './utils/constants';
 
 const App = () => (
-  <PayPalScriptProvider options={{ 'client-id': REACT_APP_PAYPAL_CLIENT_ID }}>
+  <PayPalScriptProvider
+    options={{ 'client-id': process.env.REACT_APP_PAYPAL_CLIENT_ID || '' }}
+  >
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LogIn />} />
